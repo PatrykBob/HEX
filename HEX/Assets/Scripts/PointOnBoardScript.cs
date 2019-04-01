@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PointOnBoardScript : MonoBehaviour
 {
+    public int gridI;
+    public int gridJ;
 
-    public bool ignore = false;
     public GameObject token;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instantiate(token, transform);
     }
 
     // Update is called once per frame
