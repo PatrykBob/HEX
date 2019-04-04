@@ -58,9 +58,12 @@ public class PlayerScript : NetworkBehaviour
             }
             else
             {
-                if (GUI.Button(new Rect(10, 10, 100, 100), "Koniec tury"))
+                if (myTurn)
                 {
-                    CmdAlterTurn();
+                    if (GUI.Button(new Rect(10, 10, 100, 100), "Koniec tury"))
+                    {
+                        CmdAlterTurn();
+                    }
                 }
             }
         }

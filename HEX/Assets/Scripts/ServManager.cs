@@ -57,6 +57,7 @@ public class ServManager : NetworkManager
         {
             player.playerControllers[0].gameObject.GetComponent<PlayerScript>().lobby = false;
         }
+        players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
         Debug.Log("game started");
     }
 
