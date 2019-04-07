@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
-    private static readonly float PanSpeed = 20f;
-    private static readonly float ZoomSpeedTouch = 0.1f;
-    private static readonly float ZoomSpeedMouse = 0.5f;
+    //pc
+    protected Transform _XForm_Camera;
+    protected Transform _XForm_Parent;
 
-    private static readonly float[] BoundsX = new float[] { -10f, 5f };
-    private static readonly float[] BoundsZ = new float[] { -18f, -4f };
-    private static readonly float[] ZoomBounds = new float[] { 10f, 85f };
+    protected Vector3 _LocalRotation;
+    protected float _CameraDistance = 24f;
 
-    private Camera cam;
+    public float MouseSensitivity = 4f;
+    public float ScrollSensitvity = 2f;
+    public float OrbitDampening = 10f;
+    public float ScrollDampening = 6f;
 
-    private Vector3 lastPanPosition;
-    private int panFingerId; // Touch mode only
+    public bool CameraDisabled = false;
 
-    private bool wasZoomingLastFrame; // Touch mode only
-    private Vector2[] lastZoomPositions; // Touch mode only
+    //phone
+    private Vector2 fingerStartPos = Vector2.zero;
+    private bool isSwipe = false;
 
-    void Awake()
+    public float PhoneSensitivity = 0.4f;
+    public float PhoneScrollSensitvity = 0.2f;
+
+
+    void Start()
     {
-        cam = GetComponent<Camera>();
+        this._XForm_Camera = this.transform;
+        this._XForm_Parent = this.transform.parent;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (Input.touchSupported && Application.platform != RuntimePlatform.WebGLPlayer)
         {
@@ -39,97 +46,108 @@ public class CameraRotate : MonoBehaviour
 
     void HandleTouch()
     {
-        switch (Input.touchCount)
+        if (Input.touchCount > 0)
         {
-
-            case 1: // Panning
-                wasZoomingLastFrame = false;
-
-                // If the touch began, capture its position and its finger ID.
-                // Otherwise, if the finger ID of the touch doesn't match, skip it.
-                Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Began)
+            foreach (Touch touch in Input.touches)
+            {
+                switch (touch.phase)
                 {
-                    lastPanPosition = touch.position;
-                    panFingerId = touch.fingerId;
+                    case TouchPhase.Began:
+                        isSwipe = true;
+                        fingerStartPos = touch.position;
+                        break;
+
+                    case TouchPhase.Canceled:
+                        isSwipe = false;
+                        break;
+
+                    case TouchPhase.Ended:
+                        isSwipe = false;
+                        break;
+
+                    case TouchPhase.Moved:
+                        float gestureDist = (touch.position - fingerStartPos).magnitude;
+
+                        Vector2 direction = touch.position - fingerStartPos;
+                        Vector2 swipeType = Vector2.zero;
+
+                        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                        {
+                            // the swipe is horizontal:
+                            swipeType = Vector2.right * Mathf.Sign(direction.x);
+                        }
+                        else
+                        {
+                            // the swipe is vertical:
+                            swipeType = Vector2.up * Mathf.Sign(direction.y);
+                        }
+
+                        if (swipeType.x != 0.0f)
+                        {
+                            if (swipeType.x > 0.0f)
+                            {
+                                _LocalRotation.x += (gestureDist * MouseSensitivity)/600;
+                            }
+                            else
+                            {
+                                _LocalRotation.x -= (gestureDist * MouseSensitivity)/600;
+                            }
+                        }
+
+                        if (swipeType.y != 0.0f)
+                        {
+                            if (swipeType.y > 0.0f)
+                            {
+                                _LocalRotation.y -= (gestureDist * MouseSensitivity) / 400;
+                                if (_LocalRotation.y < 30f)
+                                    _LocalRotation.y = 30f;
+                            }
+                            else
+                            {
+                                _LocalRotation.y += (gestureDist * MouseSensitivity) / 400;
+                                if (_LocalRotation.y > 90f)
+                                    _LocalRotation.y = 90f;
+                            }
+                        }
+                        break;
                 }
-                else if (touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved)
+                Quaternion QT = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
+                this._XForm_Parent.rotation = Quaternion.Lerp(this._XForm_Parent.rotation, QT, Time.deltaTime * OrbitDampening);
+
+                if (this._XForm_Camera.localPosition.z != this._CameraDistance * -1f)
                 {
-                    PanCamera(touch.position);
+                    this._XForm_Camera.localPosition = new Vector3(0f, 0f, Mathf.Lerp(this._XForm_Camera.localPosition.z, this._CameraDistance * -1f, Time.deltaTime * ScrollDampening));
                 }
-                break;
-
-            case 2: // Zooming
-                Vector2[] newPositions = new Vector2[] { Input.GetTouch(0).position, Input.GetTouch(1).position };
-                if (!wasZoomingLastFrame)
-                {
-                    lastZoomPositions = newPositions;
-                    wasZoomingLastFrame = true;
-                }
-                else
-                {
-                    // Zoom based on the distance between the new positions compared to the 
-                    // distance between the previous positions.
-                    float newDistance = Vector2.Distance(newPositions[0], newPositions[1]);
-                    float oldDistance = Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    float offset = newDistance - oldDistance;
-
-                    ZoomCamera(offset, ZoomSpeedTouch);
-
-                    lastZoomPositions = newPositions;
-                }
-                break;
-
-            default:
-                wasZoomingLastFrame = false;
-                break;
+            }
         }
     }
 
     void HandleMouse()
     {
-        // On mouse down, capture it's position.
-        // Otherwise, if the mouse is still down, pan the camera.
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
-            lastPanPosition = Input.mousePosition;
+            _LocalRotation.x += Input.GetAxis("Mouse X") * MouseSensitivity;
+            _LocalRotation.y += Input.GetAxis("Mouse Y") * MouseSensitivity;
+
+            if (_LocalRotation.y < 30f)
+                _LocalRotation.y = 30f;
+            else if (_LocalRotation.y > 90f)
+                _LocalRotation.y = 90f;
         }
-        else if (Input.GetMouseButton(0))
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
         {
-            PanCamera(Input.mousePosition);
-        }
-
-        // Check for scrolling to zoom the camera
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        ZoomCamera(scroll, ZoomSpeedMouse);
-    }
-
-    void PanCamera(Vector3 newPanPosition)
-    {
-        // Determine how much to move the camera
-        Vector3 offset = cam.ScreenToViewportPoint(lastPanPosition - newPanPosition);
-        Vector3 move = new Vector3(offset.x * PanSpeed, 0, offset.y * PanSpeed);
-
-        // Perform the movement
-        transform.Translate(move, Space.World);
-
-        // Ensure the camera remains within bounds.
-        Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(transform.position.x, BoundsX[0], BoundsX[1]);
-        pos.z = Mathf.Clamp(transform.position.z, BoundsZ[0], BoundsZ[1]);
-        transform.position = pos;
-
-        // Cache the position
-        lastPanPosition = newPanPosition;
-    }
-
-    void ZoomCamera(float offset, float speed)
-    {
-        if (offset == 0)
-        {
-            return;
+            float ScrollAmount = Input.GetAxis("Mouse ScrollWheel") * ScrollSensitvity;
+            ScrollAmount *= (this._CameraDistance * 0.3f);
+            this._CameraDistance += ScrollAmount * -1f;
+            this._CameraDistance = Mathf.Clamp(this._CameraDistance, 10f, 50f);
         }
 
-        cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - (offset * speed), ZoomBounds[0], ZoomBounds[1]);
+        Quaternion QT = Quaternion.Euler(_LocalRotation.y, _LocalRotation.x, 0);
+        this._XForm_Parent.rotation = Quaternion.Lerp(this._XForm_Parent.rotation, QT, Time.deltaTime * OrbitDampening);
+
+        if (this._XForm_Camera.localPosition.z != this._CameraDistance * -1f)
+        {
+            this._XForm_Camera.localPosition = new Vector3(0f, 0f, Mathf.Lerp(this._XForm_Camera.localPosition.z, this._CameraDistance * -1f, Time.deltaTime * ScrollDampening));
+        }
     }
 }
