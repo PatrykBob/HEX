@@ -6,6 +6,8 @@ public class InputManagerScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject SelectedToken;
+
+    public bool moving;
     // Update is called once per frame
     void Update()
     {
@@ -17,23 +19,40 @@ public class InputManagerScript : MonoBehaviour
 
                 RaycastHit[] hits = Physics.RaycastAll(ray);
 
-                foreach (var hit in hits)
-                {
-                    if (hit.transform.name == "TokenHoverQuad")
-                    {
-                        SelectedToken.transform.position = hit.point;
-                    }
-                }   
-                if(Input.GetTouch(0).phase == TouchPhase.Ended)
+                if(Input.GetTouch(0).phase == TouchPhase.Began)
                 {
                     foreach (var hit in hits)
                     {
-                        if (hit.transform.tag == "PointOnBoard")
+                        if (hit.transform.gameObject == SelectedToken)
                         {
-                            SelectedToken.transform.position = hit.transform.position;
-                            Debug.Log("punkt");
+                            moving = true;
                         }
                     }
+                }
+
+                if (moving)
+                {
+                    foreach (var hit in hits)
+                    {
+                        if (hit.transform.name == "TokenHoverQuad")
+                        {
+                            SelectedToken.transform.position = hit.point;
+                        }
+                    }
+                }
+                if(Input.GetTouch(0).phase == TouchPhase.Ended)
+                {
+                    if (moving)
+                    {
+                        foreach (var hit in hits)
+                        {
+                            if (hit.transform.tag == "PointOnBoard")
+                            {
+                                SelectedToken.transform.position = hit.transform.position;
+                            }
+                        }
+                    }
+                    moving = false;
                 }
             }
         }   
