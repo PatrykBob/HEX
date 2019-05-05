@@ -42,6 +42,7 @@ public class BoardScript : MonoBehaviour
                 if (!ignore)
                 {
                     GameObject z = Instantiate(pointOnBoard, positions[i, j], Quaternion.FromToRotation(Vector3.forward, transform.up)) as GameObject;
+                    z.transform.parent = this.transform;
                     z.GetComponent<PointOnBoardScript>().gridI = i;
                     z.GetComponent<PointOnBoardScript>().gridJ = j;
                 }
