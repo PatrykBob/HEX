@@ -109,7 +109,7 @@ public class InputManagerScript : MonoBehaviour
                         }
                         else if (rotation >= 120 && rotation < 180)
                         {
-                            rot.y = 160;
+                            rot.y = 150;
                             SelectedToken.transform.localRotation = Quaternion.Euler(rot);
                         }
                         else if (rotation >= 180 && rotation < 240)
