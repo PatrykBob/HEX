@@ -66,6 +66,8 @@
      <Compile Include="Assets\Scripts\TokenScript.cs" />
      <Compile Include="Assets\Scripts\TokenScriptableObject.cs" />
      <Compile Include="Assets\Scripts\TokenUIScript.cs" />
+     <Compile Include="Assets\SetCameraMove.cs" />
+     <Compile Include="Assets\SlidingCamer.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/adamn/OneDrive/Pulpit/Hex/HEX/HEX/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
