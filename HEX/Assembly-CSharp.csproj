@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BackToMainMenu.cs" />
      <Compile Include="Assets\NewGameCode.cs" />
      <Compile Include="Assets\QuitButton.cs" />
      <Compile Include="Assets\Scripts\BoardScript.cs" />

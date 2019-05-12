@@ -6,6 +6,7 @@ public class SlidingCamer : MonoBehaviour
 {
     public float Speed;
     public bool shouldItMove = false;
+    public bool MovingUp = false;
     // Start is called before the first frame update
     void Update()
     {
@@ -17,6 +18,14 @@ public class SlidingCamer : MonoBehaviour
             {
 
                 shouldItMove = false;
+            }
+        }
+        if(MovingUp == true)
+        {
+            transform.Translate(Vector3.down * Time.deltaTime * -Speed);
+            if(transform.position.y > 1)
+            {
+                MovingUp = false;
             }
         }
     }
