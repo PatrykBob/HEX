@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu (menuName = "Token/Create Token")]
 public class TokenScriptableObject : ScriptableObject
 {
     public string tokenName;
@@ -11,7 +12,12 @@ public class TokenScriptableObject : ScriptableObject
     public int initiation = 10;
     public int health = 1;
 
-    public bool canGetBuff = false;
+    public float initiation1X;
+    public float initiation1Y;
+    public float initiation2X;
+    public float initiation2Y;
+
+    public bool buff = false;
 
     public bool[] armor = null;
 
