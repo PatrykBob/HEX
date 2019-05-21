@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TokenUIScript : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class TokenUIScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GetComponent<RawImage>().texture = Resources.Load<Texture>("Images/Tokens/" + name);
     }
 
     // Update is called once per frame
