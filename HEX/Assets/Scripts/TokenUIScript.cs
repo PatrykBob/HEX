@@ -23,7 +23,7 @@ public class TokenUIScript : MonoBehaviour
     {
         GameObject spawned = Instantiate(token, new Vector3(0,1,0), Quaternion.Euler(new Vector3(-90,0,0)));
         spawned.GetComponent<TokenScript>().tokenObject = Resources.Load<TokenScriptableObject>("Tokens/" + name);
-        inputManager.GetComponent<InputManagerScript>().SelectedToken = spawned;
-        transform.parent.gameObject.SetActive(false);
+        inputManager.GetComponent<InputManagerScript>().selectedToken = spawned;
+        inputManager.GetComponent<InputManagerScript>().inPlace = false;
     }
 }
