@@ -7,7 +7,7 @@ public class InputManagerScript : MonoBehaviour
 {
     public GameObject selectedToken;
     public GameObject tokenToSelect;
-    public GameObject canvas;
+
     public bool moving;
     public bool rotating;
 
@@ -15,7 +15,6 @@ public class InputManagerScript : MonoBehaviour
 
     void Update()
     {
-        ShowHideUI();
         TouchControl();
         /*if (Input.GetMouseButtonDown(0))
         {
@@ -206,18 +205,6 @@ public class InputManagerScript : MonoBehaviour
             {
                 TokenSelection();
             }
-        }
-    }
-
-    void ShowHideUI()
-    {
-        if(selectedToken != null)
-        {
-            canvas.SetActive(false);
-        }
-        else
-        {
-            canvas.SetActive(true);
         }
     }
 

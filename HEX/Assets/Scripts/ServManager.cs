@@ -31,7 +31,7 @@ public class ServManager : NetworkManager
     {
         if (lobby)
         {
-            if (players.Count > 1)
+            if (players.Count > 0)//1)
             {
                 bool ready = true;
                 foreach (var player in players)
@@ -42,7 +42,7 @@ public class ServManager : NetworkManager
                         break;
                     }
                 }
-                if (ready && players.Count > 1)
+                if (ready)// && players.Count > 1)
                 {
                     StartGame();
                 }
@@ -71,8 +71,8 @@ public class ServManager : NetworkManager
         activePlayer++;
         activePlayer %= players.Count;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
+        players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[activePlayer]);
     }
-
 
     public override void OnServerConnect(NetworkConnection conn)
     {
