@@ -9,15 +9,23 @@ public class TokenScript : NetworkBehaviour
     public int i;
     public int j;
 
+    [SyncVar]
+    public string name;
+
     public TokenScriptableObject tokenObject;
-    // Start is called before the first frame update
+
     void Start()
     {
+        if (!tokenObject)
+        {
+            Debug.Log("Brak tokenObject " + name);
+            tokenObject = Resources.Load<TokenScriptableObject>("Tokens/" + name);
+        }
         if (tokenObject.initiation > 0)
         {
             GameObject initiationText = Instantiate(Resources.Load<GameObject>("Prefabs/InitiationText"));
             initiationText.GetComponent<Text>().text = tokenObject.initiation.ToString();
-            initiationText.transform.SetParent(transform.FindChild("Canvas").transform);
+            initiationText.transform.SetParent(transform.Find("Canvas").transform);
             initiationText.transform.localPosition = new Vector3(tokenObject.initiation1X, tokenObject.initiation1Y, -1.05f);
             initiationText.transform.localRotation = new Quaternion(0, 0, 0, 0);
             initiationText.transform.localScale = new Vector3(1, 1, 1);
@@ -26,7 +34,7 @@ public class TokenScript : NetworkBehaviour
             {
                 GameObject initiationText2 = Instantiate(Resources.Load<GameObject>("Prefabs/InitiationText"));
                 initiationText2.GetComponent<Text>().text = (tokenObject.initiation - 1).ToString();
-                initiationText2.transform.SetParent(transform.FindChild("Canvas").transform);
+                initiationText2.transform.SetParent(transform.Find("Canvas").transform);
                 initiationText2.transform.localPosition = new Vector3(tokenObject.initiation2X, tokenObject.initiation2Y, -1.05f);
                 initiationText2.transform.localRotation = new Quaternion(0, 0, 0, 0);
                 initiationText2.transform.localScale = new Vector3(1, 1, 1);
@@ -66,10 +74,5 @@ public class TokenScript : NetworkBehaviour
     {
         i = newI;
         j = newJ;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-           
     }
 }

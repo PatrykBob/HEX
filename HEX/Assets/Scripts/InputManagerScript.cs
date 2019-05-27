@@ -184,7 +184,7 @@ public class InputManagerScript : MonoBehaviour
                     if(tokenToSelect == hit.transform.parent.gameObject)
                     {
                         selectedToken = tokenToSelect;
-                        selectedToken.transform.FindChild("RotationQuad").gameObject.SetActive(true);
+                        selectedToken.transform.Find("RotationQuad").gameObject.SetActive(true);
                         return;
                     }
                 }
@@ -220,7 +220,7 @@ public class InputManagerScript : MonoBehaviour
             {
                 if (GUI.Button(new Rect(200, 200, 50, 50), "OK"))
                 {
-                    selectedToken.transform.FindChild("RotationQuad").gameObject.SetActive(false);
+                    selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
                     selectedToken = null;
                 }
             }

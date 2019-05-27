@@ -12,36 +12,36 @@ public class PlayerScript : NetworkBehaviour
     [SyncVar]
     public bool ready = false;
 
+    public GameObject token;
     public GameObject tokenUI;
-    public GameObject canvas;
+    public Transform panel;
 
     public int buttonSizeW = 200;
     public int buttonSizeH = 200;
-    // Start is called before the first frame update
+
     void Start()
     {
-        canvas = transform.FindChild("Canvas").gameObject;
+        panel = transform.Find("Canvas").Find("Panel");
+        panel.GetComponent<RectTransform>().sizeDelta = new Vector2(0, Screen.height/5);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     [TargetRpc]
     public void TargetGiveTokens(NetworkConnection target)
     {
+        Debug.Log("GiveToken" + tokenUI.name);
         GameObject toSpawn = Instantiate(tokenUI);
-        toSpawn.transform.SetParent(canvas.transform);
-        toSpawn.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -750);
+        toSpawn.transform.SetParent(panel);
+        toSpawn.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         toSpawn.GetComponent<TokenUIScript>().name = "Red_Bloker";
-        CmdGiveClientToken(toSpawn);
     }
 
     [Command]
-    public void CmdGiveClientToken(GameObject toSpawn)
+    public void CmdSpawnTokenOnServer(string name)
     {
-        NetworkServer.SpawnWithClientAuthority(toSpawn, connectionToClient);
+        Debug.Log("SpawnServer: " + name + "conn " + connectionToClient);
+        GameObject spawned = Instantiate(token, new Vector3(0, 1, 0), Quaternion.Euler(new Vector3(-90, 0, 0)));
+        spawned.GetComponent<TokenScript>().name = name;
+        NetworkServer.SpawnWithClientAuthority(spawned, connectionToClient);
     }
 
     [Command]

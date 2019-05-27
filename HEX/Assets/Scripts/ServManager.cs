@@ -8,11 +8,12 @@ public class ServManager : NetworkManager
     public int maxPlayers = 4;
 
     List<NetworkConnection> players;
+
     int activePlayer = 0;
     bool lobby = true;
 
     public static ServManager Instance;
-    // Start is called before the first frame update
+
     void Start()
     {
         players = new List<NetworkConnection>();
@@ -26,12 +27,11 @@ public class ServManager : NetworkManager
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (lobby)
         {
-            if (players.Count > 0)//1)
+            if (players.Count > 1)
             {
                 bool ready = true;
                 foreach (var player in players)
@@ -42,7 +42,7 @@ public class ServManager : NetworkManager
                         break;
                     }
                 }
-                if (ready)// && players.Count > 1)
+                if (ready && players.Count > 1)
                 {
                     StartGame();
                 }
