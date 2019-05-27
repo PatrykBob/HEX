@@ -8,11 +8,12 @@ public class ServManager : NetworkManager
     public int maxPlayers = 4;
 
     List<NetworkConnection> players;
+
     int activePlayer = 0;
     bool lobby = true;
 
     public static ServManager Instance;
-    // Start is called before the first frame update
+
     void Start()
     {
         players = new List<NetworkConnection>();
@@ -26,7 +27,6 @@ public class ServManager : NetworkManager
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (lobby)
@@ -71,8 +71,8 @@ public class ServManager : NetworkManager
         activePlayer++;
         activePlayer %= players.Count;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
+        players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[activePlayer]);
     }
-
 
     public override void OnServerConnect(NetworkConnection conn)
     {

@@ -10,17 +10,10 @@ public class BoardScript : MonoBehaviour
     public GameObject pointOnBoard;
     public int[,] toIgnore = new int[,] { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 1, 0 }, { 1, 1 }, { 2, 0 }, { 6, 6 }, { 6, 5 }, { 6, 4 }, { 5, 6 }, { 5, 5 }, { 4, 6 } };
 
-    // Start is called before the first frame update
     void Start()
     {
         GeneratePositions();
         PokazPozycje();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void PokazPozycje()
@@ -35,7 +28,6 @@ public class BoardScript : MonoBehaviour
                     if (i == toIgnore[k, 0] && j == toIgnore[k, 1])
                     {
                         ignore = true;
-                        //z.GetComponent<PointOnBoardScript>().ignore = true;
                         break;
                     }
                 }

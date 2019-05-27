@@ -9,15 +9,17 @@ public class PointOnBoardScript : MonoBehaviour
 
     public GameObject token;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ChangeToken(GameObject newToken)
     {
-        //Instantiate(token, this.gameObject.transform);
+        token = newToken;
+        if(token != null)
+        {
+            token.GetComponent<TokenScript>().SetPosition(gridI, gridJ);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetToken()
     {
-        
+        token = null;
     }
 }
