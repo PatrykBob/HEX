@@ -9,13 +9,20 @@ public class TokenScriptableObject : ScriptableObject
 
     public FractionEnum.Fraction fraction;
 
-    public int initiation = 10;
-    public int health = 1;
+    public int baseInitiation;
+    public int baseArmor = 0;
+
+    public bool headquarters;
 
     public float initiation1X;
     public float initiation1Y;
     public float initiation2X;
     public float initiation2Y;
+
+    public float armor1X;
+    public float armor1Y;
+    public float armor2X;
+    public float armor2Y;
 
     public bool buff = false;
 
@@ -27,18 +34,15 @@ public class TokenScriptableObject : ScriptableObject
 
     public bool[] net = null;
 
-    public bool netted = false;
-
     public bool doubleAttack = false;
-    public bool tripleAttack = false;
     public bool mobility = false;
 
     public int[] rangeAttackBuff = null;
     public int[] meleeAttackBuff = null;
     public int[] initiationBuff = null;
-    public int[] doubleAttackBuff = null;
+    public bool[] doubleAttackBuff = null;
     public int[] healthBuff = null;
-    public int[] mobilityBuff = null;
+    public bool[] mobilityBuff = null;
 
     public bool globalMobilityBuff = false;
 

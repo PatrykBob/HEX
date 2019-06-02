@@ -9,6 +9,13 @@ public class ServManager : NetworkManager
 
     List<NetworkConnection> players;
 
+    List<FractionEnum.Fraction> fractions = new List<FractionEnum.Fraction> {
+        FractionEnum.Fraction.moloch,
+        FractionEnum.Fraction.posterunek,
+        FractionEnum.Fraction.borgo,
+        FractionEnum.Fraction.hegemonia };
+
+
     int activePlayer = 0;
     bool lobby = true;
 
@@ -53,6 +60,9 @@ public class ServManager : NetworkManager
     public void StartGame()
     {
         lobby = false;
+
+        AssignFractionsToPlayers();
+
         foreach (var player in players)
         {
             player.playerControllers[0].gameObject.GetComponent<PlayerScript>().lobby = false;
@@ -72,6 +82,27 @@ public class ServManager : NetworkManager
         activePlayer %= players.Count;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[activePlayer]);
+    }
+
+    public void RandomizeFractions()
+    {
+        for (int i = 0; i < fractions.Count; i++)
+        {
+            int random = Random.Range(0, fractions.Count);
+            FractionEnum.Fraction temp;
+            temp = fractions[i];
+            fractions[i] = fractions[random];
+            fractions[random] = temp;
+        }
+    }
+
+    public void AssignFractionsToPlayers()
+    {
+        RandomizeFractions();
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetAssignFraction(players[i], fractions[i]);
+        }
     }
 
     public override void OnServerConnect(NetworkConnection conn)
