@@ -22,7 +22,7 @@ public class CameraRotate : MonoBehaviour
 
             distance = Vector2.Distance(touch1, touch2);
 
-            float pichAmount = (prevDistance - distance) * zoomSpeed * Time.deltaTime;
+            float pichAmount = (distance - prevDistance) * zoomSpeed * Time.deltaTime;
 
             Camera.main.transform.Translate(0, 0, pichAmount);
 
