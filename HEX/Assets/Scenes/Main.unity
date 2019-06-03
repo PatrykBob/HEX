@@ -634,6 +634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedToken: {fileID: 0}
   tokenToSelect: {fileID: 0}
+  board: {fileID: 1733835574}
   moving: 0
   rotating: 0
   inPlace: 0

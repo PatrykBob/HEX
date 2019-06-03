@@ -10,6 +10,8 @@ public class BoardScript : MonoBehaviour
     public GameObject pointOnBoard;
     public int[,] toIgnore = new int[,] { { 0, 0 }, { 0, 1 }, { 0, 2 }, { 1, 0 }, { 1, 1 }, { 2, 0 }, { 6, 6 }, { 6, 5 }, { 6, 4 }, { 5, 6 }, { 5, 5 }, { 4, 6 } };
 
+    public PointOnBoardScript[,] points = new PointOnBoardScript[7, 7];
+
     void Start()
     {
         GeneratePositions();
@@ -37,6 +39,7 @@ public class BoardScript : MonoBehaviour
                     z.transform.parent = this.transform;
                     z.GetComponent<PointOnBoardScript>().gridI = i;
                     z.GetComponent<PointOnBoardScript>().gridJ = j;
+                    points[i, j] = z.GetComponent<PointOnBoardScript>();
                 }
 
             }
@@ -63,5 +66,228 @@ public class BoardScript : MonoBehaviour
                     t.position.z + displacementZ * (j - length / 2));
             }
         }
+    }
+
+    public void CheckBuffs()
+    {
+        ResetBuffs();
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (points[i, j])
+                {
+                    if (points[i, j].token)
+                    {
+                        if (points[i, j].token.GetComponent<TokenScript>().tokenObject.buff)
+                        {
+                            TokenScript tokenScript = points[i, j].token.GetComponent<TokenScript>();
+                            if (tokenScript.tokenObject.meleeAttackBuff.Length > 0)
+                            {
+                                GiveMeleeBuff(i, j, GetRotatedValues(tokenScript.tokenObject.meleeAttackBuff, tokenScript.rotation));
+                            }
+                            if (tokenScript.tokenObject.rangeAttackBuff.Length > 0)
+                            {
+                                GiveRangeBuff(i, j, GetRotatedValues(tokenScript.tokenObject.rangeAttackBuff, tokenScript.rotation));
+                            }
+                            if (tokenScript.tokenObject.initiationBuff.Length > 0)
+                            {
+                                GiveInitiationBuff(i, j, GetRotatedValues(tokenScript.tokenObject.initiationBuff, tokenScript.rotation));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void ResetBuffs()
+    {
+        foreach (var token in points)
+        {
+            if (token)
+            {
+                if (token.token)
+                {
+                    token.token.GetComponent<TokenScript>().meleeBuff = 0;
+                    token.token.GetComponent<TokenScript>().rangeBuff = 0;
+                    token.token.GetComponent<TokenScript>().initiation = token.token.GetComponent<TokenScript>().tokenObject.baseInitiation;
+                    token.token.GetComponent<TokenScript>().UpdateInitiationText();
+                }
+            }
+        }
+    }
+
+    public void GiveMeleeBuff(int i, int j, int[] buff)
+    {
+        if (buff[0] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i + 1, j].token.GetComponent<TokenScript>().meleeBuff += buff[0];
+            }
+        }
+        if (buff[1] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i + 1, j - 1].token.GetComponent<TokenScript>().meleeBuff += buff[1];
+            }
+        }
+        if (buff[2] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i, j - 1].token.GetComponent<TokenScript>().meleeBuff += buff[2];
+            }
+        }
+        if (buff[3] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i - 1, j].token.GetComponent<TokenScript>().meleeBuff += buff[3];
+            }
+        }
+        if (buff[4] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i - 1, j + 1].token.GetComponent<TokenScript>().meleeBuff += buff[4];
+            }
+        }
+        if (buff[5] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i, j + 1].token.GetComponent<TokenScript>().meleeBuff += buff[5];
+            }
+        }
+    }
+
+    public void GiveRangeBuff(int i, int j, int[] buff)
+    {
+        if (buff[0] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i + 1, j].token.GetComponent<TokenScript>().rangeBuff += buff[0];
+            }
+        }
+        if (buff[1] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i + 1, j - 1].token.GetComponent<TokenScript>().rangeBuff += buff[1];
+            }
+        }
+        if (buff[2] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i, j - 1].token.GetComponent<TokenScript>().rangeBuff += buff[2];
+            }
+        }
+        if (buff[3] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i - 1, j].token.GetComponent<TokenScript>().rangeBuff += buff[3];
+            }
+        }
+        if (buff[4] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i - 1, j + 1].token.GetComponent<TokenScript>().rangeBuff += buff[4];
+            }
+        }
+        if (buff[5] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i, j + 1].token.GetComponent<TokenScript>().rangeBuff += buff[5];
+            }
+        }
+    }
+
+    public void GiveInitiationBuff(int i, int j, int[] buff)
+    {
+        if (buff[0] > 0)
+        {
+            if (IsThereAToken(i + 1, j))
+            {
+                points[i + 1, j].token.GetComponent<TokenScript>().initiation += buff[0];
+                points[i + 1, j].token.GetComponent<TokenScript>().UpdateInitiationText();
+            }
+        }
+        if (buff[1] > 0)
+        {
+            if (IsThereAToken(i + 1, j - 1))
+            {
+                points[i + 1, j - 1].token.GetComponent<TokenScript>().initiation += buff[1];
+                points[i + 1, j - 1].token.GetComponent<TokenScript>().UpdateInitiationText();
+            }
+        }
+        if (buff[2] > 0)
+        {
+            if (IsThereAToken(i, j - 1))
+            {
+                points[i, j - 1].token.GetComponent<TokenScript>().initiation += buff[2];
+                points[i, j - 1].token.GetComponent<TokenScript>().UpdateInitiationText();
+            }
+        }
+        if (buff[3] > 0)
+        {
+            if (IsThereAToken(i - 1, j))
+            {
+                points[i - 1, j].token.GetComponent<TokenScript>().initiation += buff[3];
+                points[i - 1, j].token.GetComponent<TokenScript>().UpdateInitiationText();
+            }
+        }
+        if (buff[4] > 0)
+        {
+            if (IsThereAToken(i - 1, j + 1))
+            {
+                points[i - 1, j + 1].token.GetComponent<TokenScript>().initiation += buff[4];
+                points[i - 1, j + 1].token.GetComponent<TokenScript>().UpdateInitiationText();
+            }
+        }
+        if (buff[5] > 0)
+        {
+            if (IsThereAToken(i, j + 1))
+            {
+                points[i, j + 1].token.GetComponent<TokenScript>().initiation += buff[5];
+                points[i, j + 1].token.GetComponent<TokenScript>().UpdateInitiationText();
+            }
+        }
+    }
+
+
+    public bool IsThereAToken(int i, int j)
+    {
+        if (i < 0 || i > 6 || j < 0 || j > 6)
+        {
+            return false;
+        }
+        else
+        {
+            if (points[i, j].token)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int[] GetRotatedValues(int[] array, int value)
+    {
+        int[] newArray = new int[6];
+        value = 6 - value;
+        for (int i = 0; i < 6; i++)
+        {
+            int index = (i + value) % 6;
+            newArray[i] = array[index];
+        }
+        return newArray;
     }
 }

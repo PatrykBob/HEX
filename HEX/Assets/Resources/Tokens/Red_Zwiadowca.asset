@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72b85c404a869e34a92a3b6874215cb9, type: 3}
-  m_Name: Red_Hybryda
+  m_Name: Red_Zwiadowca
   m_EditorClassIdentifier: 
-  tokenName: Red_Hybryda
+  tokenName: Red_Zwiadowca
   fraction: 1
-  baseInitiation: 3
+  baseInitiation: 0
   baseArmor: 0
   headquarters: 0
-  initiation1X: -42.6
-  initiation1Y: 62.7
+  initiation1X: 0
+  initiation1Y: 0
   initiation2X: 0
   initiation2Y: 0
   armor1X: 0
   armor1Y: 0
   armor2X: 0
   armor2Y: 0
-  buff: 0
+  buff: 1
   armor: 
-  attackRange: 010000000000000000000000000000000000000000000000
+  attackRange: 
   attackMelee: 
   attackGauss: 
   net: 
@@ -35,7 +35,7 @@ MonoBehaviour:
   mobility: 0
   rangeAttackBuff: 
   meleeAttackBuff: 
-  initiationBuff: 
+  initiationBuff: 010000000000000001000000000000000100000000000000
   doubleAttackBuff: 
   healthBuff: 
   mobilityBuff: 

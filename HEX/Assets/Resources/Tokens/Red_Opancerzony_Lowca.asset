@@ -14,21 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tokenName: Red_Opancerzony_Lowca
   fraction: 1
-  initiation: 2
-  health: 1
+  baseInitiation: 2
+  baseArmor: 0
+  headquarters: 0
   initiation1X: 0
   initiation1Y: 0
   initiation2X: 0
   initiation2Y: 0
+  armor1X: 0
+  armor1Y: 0
+  armor2X: 0
+  armor2Y: 0
   buff: 0
   armor: 010000000001
   attackRange: 
   attackMelee: 010000000100000001000000010000000100000001000000
   attackGauss: 
   net: 
-  netted: 0
   doubleAttack: 0
-  tripleAttack: 0
   mobility: 0
   rangeAttackBuff: 
   meleeAttackBuff: 
