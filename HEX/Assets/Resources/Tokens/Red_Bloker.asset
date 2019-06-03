@@ -14,21 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tokenName: Red_Bloker
   fraction: 1
-  initiation: 0
-  health: 3
+  baseInitiation: 0
+  baseArmor: 2
+  headquarters: 0
   initiation1X: 0
   initiation1Y: 0
   initiation2X: 0
   initiation2Y: 0
-  Buff: 0
+  armor1X: 0
+  armor1Y: 0
+  armor2X: 0
+  armor2Y: 0
+  buff: 0
   armor: 010000000000
   attackRange: 
   attackMelee: 
   attackGauss: 
   net: 
-  netted: 0
   doubleAttack: 0
-  tripleAttack: 0
   mobility: 0
   rangeAttackBuff: 
   meleeAttackBuff: 

@@ -44,7 +44,12 @@ public class PlayerScript : NetworkBehaviour
         GameObject toSpawn = Instantiate(tokenUI);
         toSpawn.transform.SetParent(panel);
         toSpawn.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        toSpawn.GetComponent<TokenUIScript>().name = "Red_Bloker";
+        toSpawn.GetComponent<TokenUIScript>().name = "Red_Zwiadowca";
+
+        GameObject toSpawn2 = Instantiate(tokenUI);
+        toSpawn2.transform.SetParent(panel);
+        toSpawn2.GetComponent<RectTransform>().anchoredPosition = new Vector2(200, 0);
+        toSpawn2.GetComponent<TokenUIScript>().name = "Red_Hybryda";
     }
 
     [Command]
@@ -52,6 +57,7 @@ public class PlayerScript : NetworkBehaviour
     {
         Debug.Log("SpawnServer: " + name + "conn " + connectionToClient);
         GameObject spawned = Instantiate(token, new Vector3(0, 1, 0), Quaternion.Euler(new Vector3(-90, 0, 0)));
+        spawned.name = name;
         spawned.GetComponent<TokenScript>().name = name;
         NetworkServer.SpawnWithClientAuthority(spawned, connectionToClient);
     }

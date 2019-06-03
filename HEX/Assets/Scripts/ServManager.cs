@@ -38,7 +38,7 @@ public class ServManager : NetworkManager
     {
         if (lobby)
         {
-            if (players.Count > 1)
+            if (players.Count > 0)
             {
                 bool ready = true;
                 foreach (var player in players)
@@ -49,7 +49,7 @@ public class ServManager : NetworkManager
                         break;
                     }
                 }
-                if (ready && players.Count > 1)
+                if (ready && players.Count > 0)
                 {
                     StartGame();
                 }
@@ -94,6 +94,11 @@ public class ServManager : NetworkManager
             fractions[i] = fractions[random];
             fractions[random] = temp;
         }
+    }
+
+    public void Battle()
+    {
+
     }
 
     public void AssignFractionsToPlayers()

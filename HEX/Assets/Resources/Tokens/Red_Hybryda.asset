@@ -14,21 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tokenName: Red_Hybryda
   fraction: 1
-  initiation: 3
-  health: 1
+  baseInitiation: 3
+  baseArmor: 0
+  headquarters: 0
   initiation1X: -42.6
   initiation1Y: 62.7
   initiation2X: 0
   initiation2Y: 0
+  armor1X: 0
+  armor1Y: 0
+  armor2X: 0
+  armor2Y: 0
   buff: 0
   armor: 
   attackRange: 010000000000000000000000000000000000000000000000
   attackMelee: 
   attackGauss: 
   net: 
-  netted: 0
   doubleAttack: 0
-  tripleAttack: 0
   mobility: 0
   rangeAttackBuff: 
   meleeAttackBuff: 

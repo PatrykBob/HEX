@@ -7,6 +7,7 @@ public class InputManagerScript : MonoBehaviour
 {
     public GameObject selectedToken;
     public GameObject tokenToSelect;
+    public GameObject board;
 
     public bool moving;
     public bool rotating;
@@ -77,6 +78,7 @@ public class InputManagerScript : MonoBehaviour
             }
         }
         moving = false;
+        board.GetComponent<BoardScript>().CheckBuffs();
     }
 
     void SnapTokenRotation()
@@ -87,33 +89,40 @@ public class InputManagerScript : MonoBehaviour
         {
             rot.y = 300;
             selectedToken.transform.localRotation = Quaternion.Euler(rot);
+            selectedToken.GetComponent<TokenScript>().rotation = 5;
         }
         else if (rotation >= 330 || rotation < 30)
         {
             rot.y = 0;
             selectedToken.transform.localRotation = Quaternion.Euler(rot);
+            selectedToken.GetComponent<TokenScript>().rotation = 0;
         }
         else if (rotation >= 30 && rotation < 90)
         {
             rot.y = 60;
             selectedToken.transform.localRotation = Quaternion.Euler(rot);
+            selectedToken.GetComponent<TokenScript>().rotation = 1;
         }
         else if (rotation >= 90 && rotation < 150)
         {
             rot.y = 120;
             selectedToken.transform.localRotation = Quaternion.Euler(rot);
+            selectedToken.GetComponent<TokenScript>().rotation = 2;
         }
         else if (rotation >= 150 && rotation < 210)
         {
             rot.y = 180;
             selectedToken.transform.localRotation = Quaternion.Euler(rot);
+            selectedToken.GetComponent<TokenScript>().rotation = 3;
         }
         else if (rotation >= 210 && rotation < 270)
         {
             rot.y = 240;
             selectedToken.transform.localRotation = Quaternion.Euler(rot);
+            selectedToken.GetComponent<TokenScript>().rotation = 4;
         }
         rotating = false;
+        board.GetComponent<BoardScript>().CheckBuffs();
     }
 
     void TokenMoveRotate()
@@ -210,10 +219,6 @@ public class InputManagerScript : MonoBehaviour
 
     private void OnGUI()
     {
-        if (selectedToken != null) { GUI.Label(new Rect(400, 400, 100, 100), selectedToken.name); }
-        if (tokenToSelect != null) { GUI.Label(new Rect(500, 500, 100, 100), tokenToSelect.name); }
-
-
         if (selectedToken != null)
         {
             if (inPlace)
@@ -222,6 +227,7 @@ public class InputManagerScript : MonoBehaviour
                 {
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
                     selectedToken = null;
+                    board.GetComponent<BoardScript>().CheckBuffs();
                 }
             }
 
