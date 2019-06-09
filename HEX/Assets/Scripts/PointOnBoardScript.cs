@@ -22,4 +22,21 @@ public class PointOnBoardScript : MonoBehaviour
     {
         token = null;
     }
+
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Token")
+        {
+            token = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject == token)
+        {
+            token = null;
+        }
+    }
 }

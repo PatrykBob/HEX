@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2382815021017038603}
   - component: {fileID: 4931417545296016643}
   - component: {fileID: 2712288769353162693}
+  - component: {fileID: -6202684589525210504}
   m_Layer: 0
   m_Name: Zeton
   m_TagString: Untagged
@@ -113,6 +114,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   i: 0
   j: 0
+  name: 
+  health: 1
+  netted: 0
+  doubleAttack: 0
+  rangeBuff: 0
+  meleeBuff: 0
+  initiation: 0
+  wasMoved: 0
+  mobility: 0
+  rotation: 0
+  tokenObject: {fileID: 0}
 --- !u!114 &2712288769353162693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +134,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2382815021026381003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SceneId:
@@ -146,3 +158,17 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!64 &-6202684589525210504
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2382815021026381003}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 87c126a5c521b824f94884d0283924dc, type: 3}

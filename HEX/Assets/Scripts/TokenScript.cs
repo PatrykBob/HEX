@@ -97,6 +97,10 @@ public class TokenScript : NetworkBehaviour
             }
             transform.Find("Canvas").transform.Find("InitiationText").GetComponent<Text>().color = color;
         }
+        else
+        {
+            Debug.Log("Nie znaleziono");
+        }
     }
 
     void ResetPointOnBoardToken()
