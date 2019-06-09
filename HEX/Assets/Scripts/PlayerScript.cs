@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -14,6 +15,11 @@ public class PlayerScript : NetworkBehaviour
     [SyncVar]
     public FractionEnum.Fraction fraction;
 
+    public List<string> Tokens = new List<string>();
+    public List<string> TokensOnHand = new List<string>();
+
+    public List<int> ToRemove = new List<int>();
+
     public GameObject token;
     public GameObject tokenUI;
     public Transform panel;
@@ -24,10 +30,10 @@ public class PlayerScript : NetworkBehaviour
 
     void Start()
     {
-        //if (!isLocalPlayer)
-        //{
-            //gameObject.SetActive(false);
-        //}
+        if (!isLocalPlayer)
+        {
+            gameObject.SetActive(false);
+        }
         panel = transform.Find("Canvas").Find("Panel");
         panel.GetComponent<RectTransform>().sizeDelta = new Vector2(0, Screen.height / 5);
         board = GameObject.Find("Board");
@@ -37,6 +43,18 @@ public class PlayerScript : NetworkBehaviour
     public void TargetAssignFraction(NetworkConnection target, FractionEnum.Fraction fractionToAssign)
     {
         fraction = fractionToAssign;
+        GetTokenList();
+        ShuffleTokens();
+    }
+
+    void GetTokenList()
+    {
+        TextAsset list = (TextAsset)Resources.Load("TokenLists/" + fraction.ToString(), typeof(TextAsset));
+        string[] lines = list.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        foreach (var line in lines)
+        {
+            Tokens.Add(line);
+        }
     }
 
     [ClientRpc]
@@ -49,22 +67,72 @@ public class PlayerScript : NetworkBehaviour
     public void CheckBuffs()
     {
         Debug.Log("Check player");
-        RpcCheckBuffs();
+        ServManager.Instance.CheckBuffs();
+        //RpcCheckBuffs();
+    }
+
+    void FillTokens()
+    {
+        int count = TokensOnHand.Count;
+        if (count < 3)
+        {
+            for (int i = 0; i < 3 - count; i++)
+            {
+                TokensOnHand.Add(Tokens[0]);
+                Tokens.RemoveAt(0);
+            }
+        }
+    }
+
+    public void RemoveToken(int i)
+    {
+        ToRemove.Add(i);
+    }
+
+    void ShuffleTokens()
+    {
+        for (int i = 0; i < Tokens.Count; i++)
+        {
+            int random = UnityEngine.Random.Range(0, Tokens.Count);
+            string temp;
+            temp = Tokens[i];
+            Tokens[i] = Tokens[random];
+            Tokens[random] = temp;
+        }
     }
 
     [TargetRpc]
     public void TargetGiveTokens(NetworkConnection target)
     {
-        Debug.Log("GiveToken" + tokenUI.name);
-        GameObject toSpawn = Instantiate(tokenUI);
-        toSpawn.transform.SetParent(panel);
-        toSpawn.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        toSpawn.GetComponent<TokenUIScript>().name = "Red_Zwiadowca";
+        FillTokens();
+        RemoveTokens();
+        SpawnTokens();
+    }
 
-        GameObject toSpawn2 = Instantiate(tokenUI);
-        toSpawn2.transform.SetParent(panel);
-        toSpawn2.GetComponent<RectTransform>().anchoredPosition = new Vector2(200, 0);
-        toSpawn2.GetComponent<TokenUIScript>().name = "Red_Hybryda";
+    void RemoveTokens()
+    {
+        foreach(Transform token in panel)
+        {
+            Destroy(token.gameObject);
+        }
+    }
+
+    void SpawnTokens()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject toSpawn = Instantiate(tokenUI);
+            toSpawn.transform.SetParent(panel);
+            toSpawn.GetComponent<RectTransform>().anchoredPosition = new Vector2(-300 + (300*i), 0);
+            toSpawn.GetComponent<TokenUIScript>().name = TokensOnHand[i];
+            toSpawn.GetComponent<TokenUIScript>().index = i;
+            toSpawn.GetComponent<TokenUIScript>().LoadTexture();
+        }
+    }
+    [Command]
+    public void CmdBattle()
+    {
+        board.GetComponent<BoardScript>().Battle();
     }
 
     [Command]
@@ -80,7 +148,19 @@ public class PlayerScript : NetworkBehaviour
     [Command]
     void CmdAlterTurn()
     {
+        RemoveTokensFromList();
         ServManager.Instance.AlterTurns();
+    }
+
+    void RemoveTokensFromList()
+    {
+        ToRemove.Sort();
+        ToRemove.Reverse();
+        foreach (var i in ToRemove)
+        {
+            TokensOnHand.RemoveAt(i);
+        }
+        ToRemove = new List<int>();
     }
 
     [Command]
@@ -91,29 +171,26 @@ public class PlayerScript : NetworkBehaviour
 
     void OnGUI()
     {
-        if (isLocalPlayer)
-        {
-            if (lobby)
-            {
-                GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), ready ? "Gotowy" : "Nie gotowy");
 
-                if (GUI.Button(new Rect(10, 10, 200, 200), "Gotowość"))
-                {
-                    CmdReady();
-                }
-            }
-            else
+        if (lobby)
+        {
+            GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), ready ? "Gotowy" : "Nie gotowy");
+
+            if (GUI.Button(new Rect(10, 10, 200, 200), "Gotowość"))
             {
-                GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), fraction.ToString());
-                if (myTurn)
+                CmdReady();
+            }
+        }
+        else
+        {
+            GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), fraction.ToString());
+            if (myTurn)
+            {
+                if (GUI.Button(new Rect(10, 10, 200, 200), "Koniec tury"))
                 {
-                    if (GUI.Button(new Rect(10, 10, 200, 200), "Koniec tury"))
-                    {
-                        CmdAlterTurn();
-                    }
+                    CmdAlterTurn();
                 }
             }
         }
     }
-
 }

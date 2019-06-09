@@ -30,6 +30,9 @@ public class TokenScript : NetworkBehaviour
     [SyncVar]
     public int rotation = 0;
 
+    [SyncVar]
+    public bool toDestroy = false;
+
     public TokenScriptableObject tokenObject;
 
     void Start()
@@ -126,7 +129,7 @@ public class TokenScript : NetworkBehaviour
         health -= attack;
         if(health < 1)
         {
-            Destroy(this);
+            toDestroy = true;
         }
     }
 

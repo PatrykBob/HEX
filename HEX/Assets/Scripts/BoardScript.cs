@@ -13,6 +13,8 @@ public class BoardScript : MonoBehaviour
 
     public PointOnBoardScript[,] points = new PointOnBoardScript[7, 7];
 
+    bool koniec = false;
+
     void Start()
     {
         GeneratePositions();
@@ -91,17 +93,43 @@ public class BoardScript : MonoBehaviour
                                 TokenScript tokenScript = points[i, j].token.GetComponent<TokenScript>();
                                 if (tokenScript.tokenObject.attackMelee.Length > 0)
                                 {
-                                    AttackMelee(i, j, GetRotatedValues(tokenScript.tokenObject.meleeAttackBuff, tokenScript.rotation), tokenScript.meleeBuff, tokenScript.tokenObject.fraction);
+                                    AttackMelee(i, j, GetRotatedValues(tokenScript.tokenObject.attackMelee, tokenScript.rotation), tokenScript.meleeBuff, tokenScript.tokenObject.fraction);
                                 }
                                 if (tokenScript.tokenObject.attackRange.Length > 0)
                                 {
-                                    AttackRange(i, j, GetRotatedValues(tokenScript.tokenObject.meleeAttackBuff, tokenScript.rotation), tokenScript.meleeBuff, tokenScript.tokenObject.fraction);
+                                    AttackRange(i, j, GetRotatedValues(tokenScript.tokenObject.attackRange, tokenScript.rotation), tokenScript.meleeBuff, tokenScript.tokenObject.fraction);
                                 }
                                 if (tokenScript.tokenObject.attackGauss.Length > 0)
                                 {
-                                    AttackGauss(i, j, GetRotatedValues(tokenScript.tokenObject.meleeAttackBuff, tokenScript.rotation), tokenScript.meleeBuff, tokenScript.tokenObject.fraction);
+                                    AttackGauss(i, j, GetRotatedValues(tokenScript.tokenObject.attackGauss, tokenScript.rotation), tokenScript.meleeBuff, tokenScript.tokenObject.fraction);
                                 }
                             }
+                        }
+                    }
+                }
+            }
+            DestroyTokens();
+            CheckBuffs();
+        }
+    }
+
+    void DestroyTokens()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                if (points[i, j])
+                {
+                    if (points[i, j].token)
+                    {
+                        if (points[i, j].token.GetComponent<TokenScript>().toDestroy)
+                        {
+                            if(points[i, j].token.GetComponent<TokenScript>().tokenObject.headquarters)
+                            {
+                                KoniecGry();
+                            }
+                            Destroy(points[i, j].token);
                         }
                     }
                 }
@@ -109,6 +137,10 @@ public class BoardScript : MonoBehaviour
         }
     }
 
+    void KoniecGry()
+    {
+        koniec = true;
+    }
     int GetHighestInitiation()
     {
         int max = 0;
@@ -567,5 +599,13 @@ public class BoardScript : MonoBehaviour
             newArray[i] = array[index];
         }
         return newArray;
+    }
+
+    private void OnGUI()
+    {
+        if (koniec)
+        {
+            GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, 100, 100), "Koniec gry");
+        }
     }
 }

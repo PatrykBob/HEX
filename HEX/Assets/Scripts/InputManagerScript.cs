@@ -243,10 +243,5 @@ public class InputManagerScript : MonoBehaviour
                 selectedToken = null;
             }
         }
-
-        if(GUI.Button(new Rect(100,300,50,50), "Check"))
-        {
-            CheckBuffs();
-        }
     }
 }
