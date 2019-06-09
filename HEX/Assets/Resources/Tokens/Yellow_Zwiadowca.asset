@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b85c404a869e34a92a3b6874215cb9, type: 3}
+  m_Name: Yellow_Zwiadowca
+  m_EditorClassIdentifier: 
+  tokenName: Yellow_Zwiadowca
+  fraction: 3
+  baseInitiation: 0
+  baseArmor: 0
+  headquarters: 0
+  initiation1X: 0
+  initiation1Y: 0
+  initiation2X: 0
+  initiation2Y: 0
+  armor1X: 0
+  armor1Y: 0
+  armor2X: 0
+  armor2Y: 0
+  buff: 1
+  armor: 
+  attackRange: 
+  attackMelee: 
+  attackGauss: 
+  net: 
+  doubleAttack: 0
+  mobility: 0
+  rangeAttackBuff: 
+  meleeAttackBuff: 
+  initiationBuff: 010000000100000000000000000000000000000001000000
+  doubleAttackBuff: 
+  healthBuff: 
+  mobilityBuff: 
+  globalMobilityBuff: 0
+  scooper: 
+  quartermaster: 
+  enemyInitiationNerf: 
+  canExplode: 0
