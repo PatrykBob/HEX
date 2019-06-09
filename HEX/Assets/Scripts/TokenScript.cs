@@ -121,6 +121,15 @@ public class TokenScript : NetworkBehaviour
         }
     }
 
+    public void GetAttacked(int attack)
+    {
+        health -= attack;
+        if(health < 1)
+        {
+            Destroy(this);
+        }
+    }
+
     public void SetPosition(int newI, int newJ)
     {
         i = newI;
