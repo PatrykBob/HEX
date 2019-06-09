@@ -26,7 +26,7 @@ MonoBehaviour:
   armor2X: 0
   armor2Y: 0
   buff: 1
-  armor: 
+  armor: 000000000000
   attackRange: 
   attackMelee: 
   attackGauss: 
