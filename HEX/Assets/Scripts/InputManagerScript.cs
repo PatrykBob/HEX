@@ -55,12 +55,18 @@ public class InputManagerScript : MonoBehaviour
         if (movingHit)
         {
             moving = true;
-            selectedToken.GetComponent<TokenScript>().ResetPosition();
+            //selectedToken.GetComponent<TokenScript>().ResetPosition();
         }
         else if (rotatingHit && !movingHit)
         {
             rotating = true;
         }
+    }
+
+    void CheckBuffs()
+    {
+        Debug.Log("Check Input");
+        GetComponent<PlayerScript>().CheckBuffs();
     }
 
     void CheckTokenPlace(RaycastHit[] hits)
@@ -72,13 +78,13 @@ public class InputManagerScript : MonoBehaviour
                 if (hit.transform.GetComponent<PointOnBoardScript>().token == null)
                 {
                     selectedToken.transform.position = hit.transform.position;
-                    hit.transform.GetComponent<PointOnBoardScript>().ChangeToken(selectedToken);
+                    //hit.transform.GetComponent<PointOnBoardScript>().ChangeToken(selectedToken);
                     inPlace = true;
                 }
             }
         }
         moving = false;
-        board.GetComponent<BoardScript>().CheckBuffs();
+        CheckBuffs();
     }
 
     void SnapTokenRotation()
@@ -122,7 +128,7 @@ public class InputManagerScript : MonoBehaviour
             selectedToken.GetComponent<TokenScript>().rotation = 4;
         }
         rotating = false;
-        board.GetComponent<BoardScript>().CheckBuffs();
+        CheckBuffs();
     }
 
     void TokenMoveRotate()
@@ -227,7 +233,7 @@ public class InputManagerScript : MonoBehaviour
                 {
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
                     selectedToken = null;
-                    board.GetComponent<BoardScript>().CheckBuffs();
+                    CheckBuffs();
                 }
             }
 

@@ -72,6 +72,10 @@
     <Compile Include="Assets\Scripts\TokenScript.cs" />
     <Compile Include="Assets\Scripts\TokenScriptableObject.cs" />
     <Compile Include="Assets\Scripts\TokenUIScript.cs" />
+    <None Include="Assets\Resources\TokenLists\Posterunek.txt" />
+    <None Include="Assets\Resources\TokenLists\Hegemonia.txt" />
+    <None Include="Assets\Resources\TokenLists\Borgo.txt" />
+    <None Include="Assets\Resources\TokenLists\Moloch.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/GitHub/HEX/HEX/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

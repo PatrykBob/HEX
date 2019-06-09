@@ -30,6 +30,9 @@ public class TokenScript : NetworkBehaviour
     [SyncVar]
     public int rotation = 0;
 
+    [SyncVar]
+    public bool toDestroy = false;
+
     public TokenScriptableObject tokenObject;
 
     void Start()
@@ -97,6 +100,10 @@ public class TokenScript : NetworkBehaviour
             }
             transform.Find("Canvas").transform.Find("InitiationText").GetComponent<Text>().color = color;
         }
+        else
+        {
+            Debug.Log("Nie znaleziono");
+        }
     }
 
     void ResetPointOnBoardToken()
@@ -114,6 +121,15 @@ public class TokenScript : NetworkBehaviour
                     script.ResetToken();
                 }
             }
+        }
+    }
+
+    public void GetAttacked(int attack)
+    {
+        health -= attack;
+        if(health < 1)
+        {
+            toDestroy = true;
         }
     }
 

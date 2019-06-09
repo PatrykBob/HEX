@@ -38,7 +38,7 @@ public class ServManager : NetworkManager
     {
         if (lobby)
         {
-            if (players.Count > 0)
+            if (players.Count > 1)
             {
                 bool ready = true;
                 foreach (var player in players)
@@ -49,11 +49,19 @@ public class ServManager : NetworkManager
                         break;
                     }
                 }
-                if (ready && players.Count > 0)
+                if (ready && players.Count > 1)
                 {
                     StartGame();
                 }
             }
+        }
+    }
+
+    public void CheckBuffs()
+    {
+        foreach(var player in players)
+        {
+            player.playerControllers[0].gameObject.GetComponent<PlayerScript>().RpcCheckBuffs();
         }
     }
 
