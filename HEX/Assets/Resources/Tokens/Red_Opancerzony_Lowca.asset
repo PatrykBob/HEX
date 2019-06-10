@@ -17,8 +17,8 @@ MonoBehaviour:
   baseInitiation: 2
   baseArmor: 0
   headquarters: 0
-  initiation1X: 0
-  initiation1Y: 0
+  initiation1X: 79
+  initiation1Y: 3
   initiation2X: 0
   initiation2Y: 0
   armor1X: 0
