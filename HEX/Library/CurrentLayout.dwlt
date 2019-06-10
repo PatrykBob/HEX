@@ -41,7 +41,7 @@ MonoBehaviour:
   - {fileID: 4}
   m_Position:
     serializedVersion: 2
-    x: 431
+    x: 339
     y: 0
     width: 1920
     height: 997
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 642
+    x: 395
     y: 0
     width: 1920
     height: 30
@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 347
-    width: 642
-    height: 447
+    y: 315
+    width: 395
+    height: 423
   m_MinSize: {x: 232, y: 272}
   m_MaxSize: {x: 10002, y: 10022}
   m_ActualView: {fileID: 18}
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scripts
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\adamn\OneDrive\Pulpit\Hex\HEX\HEX
+  m_LastProjectPath: D:\GitHub\HEX\HEX
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
