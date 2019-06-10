@@ -45,15 +45,36 @@ public class PlayerScript : NetworkBehaviour
         fraction = fractionToAssign;
         GetTokenList();
         ShuffleTokens();
+        string sztab = "";
+        if(fraction == FractionEnum.Fraction.borgo)
+        {
+            sztab = "Blue_Sztab";
+        }
+        else if(fraction == FractionEnum.Fraction.posterunek)
+        {
+            sztab = "Green_Sztab";
+        }
+        else if (fraction == FractionEnum.Fraction.hegemonia)
+        {
+            sztab = "Yellow_Sztab";
+        }
+        else if (fraction == FractionEnum.Fraction.moloch)
+        {
+            sztab = "Red_Sztab";
+        }
+        TokensOnHand.Add(sztab);
     }
 
     void GetTokenList()
     {
         TextAsset list = (TextAsset)Resources.Load("TokenLists/" + fraction.ToString(), typeof(TextAsset));
-        string[] lines = list.text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        string[] lines = list.text.Split("\n\r".ToCharArray());
         foreach (var line in lines)
         {
-            Tokens.Add(line);
+            if (line != "")
+            {
+                Tokens.Add(line);
+            }
         }
     }
 
@@ -176,17 +197,16 @@ public class PlayerScript : NetworkBehaviour
         {
             GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), ready ? "Gotowy" : "Nie gotowy");
 
-            if (GUI.Button(new Rect(10, 10, 200, 200), "Gotowość"))
+            if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), "Gotowość"))
             {
                 CmdReady();
             }
         }
         else
         {
-            GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), fraction.ToString());
             if (myTurn)
             {
-                if (GUI.Button(new Rect(10, 10, 200, 200), "Koniec tury"))
+                if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), "Koniec tury"))
                 {
                     CmdAlterTurn();
                 }

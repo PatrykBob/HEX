@@ -42,11 +42,11 @@ public class InputManagerScript : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            if (hit.transform.gameObject.name == "RotationQuad")
+            if (hit.transform.gameObject.name == "RotationQuad" && hit.transform.parent.gameObject == selectedToken)
             {
                 rotatingHit = true;
             }
-            if (hit.transform.gameObject.name == "MovingQuad")
+            if (hit.transform.gameObject.name == "MovingQuad" && hit.transform.parent.gameObject == selectedToken)
             {
                 movingHit = true;
                 inPlace = false;
@@ -229,18 +229,12 @@ public class InputManagerScript : MonoBehaviour
         {
             if (inPlace)
             {
-                if (GUI.Button(new Rect(200, 200, 50, 50), "OK"))
+                if (GUI.Button(new Rect(100, 300, 50, 50), "OK"))
                 {
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
                     selectedToken = null;
                     CheckBuffs();
                 }
-            }
-
-            if(GUI.Button(new Rect(300,300,50,50), "Odrzuć"))
-            {
-                Destroy(selectedToken);
-                selectedToken = null;
             }
         }
     }
