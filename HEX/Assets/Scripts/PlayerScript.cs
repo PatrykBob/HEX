@@ -35,6 +35,86 @@ public class PlayerScript : NetworkBehaviour
     public void TargetAssignFraction(NetworkConnection target, FractionEnum.Fraction fractionToAssign)
     {
         fraction = fractionToAssign;
+<<<<<<< Updated upstream
+=======
+        GetTokenList();
+        ShuffleTokens();
+        string sztab = "";
+        if(fraction == FractionEnum.Fraction.borgo)
+        {
+            sztab = "Blue_Sztab";
+        }
+        else if(fraction == FractionEnum.Fraction.posterunek)
+        {
+            sztab = "Green_Sztab";
+        }
+        else if (fraction == FractionEnum.Fraction.hegemonia)
+        {
+            sztab = "Yellow_Sztab";
+        }
+        else if (fraction == FractionEnum.Fraction.moloch)
+        {
+            sztab = "Red_Sztab";
+        }
+        TokensOnHand.Add(sztab);
+    }
+
+    void GetTokenList()
+    {
+        TextAsset list = (TextAsset)Resources.Load("TokenLists/" + fraction.ToString(), typeof(TextAsset));
+        string[] lines = list.text.Split("\n\r".ToCharArray());
+        foreach (var line in lines)
+        {
+            if (line != "")
+            {
+                Tokens.Add(line);
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcCheckBuffs()
+    {
+        Debug.Log("Check player rpc");
+        board.GetComponent<BoardScript>().CheckBuffs();
+    }
+
+    public void CheckBuffs()
+    {
+        Debug.Log("Check player");
+        ServManager.Instance.CheckBuffs();
+        //RpcCheckBuffs();
+    }
+
+    void FillTokens()
+    {
+        int count = TokensOnHand.Count;
+        if (count < 3)
+        {
+            for (int i = 0; i < 3 - count; i++)
+            {
+                TokensOnHand.Add(Tokens[0]);
+                Tokens.RemoveAt(0);
+            }
+        }
+    }
+    
+    public void RemoveToken(int i)
+    {
+        ToRemove.Add(i);
+    }
+
+    void ShuffleTokens()
+    {
+        for (int i = 0; i < Tokens.Count; i++)
+        {
+            int random = UnityEngine.Random.Range(0, Tokens.Count);
+            string temp;
+            temp = Tokens[i];
+            Tokens[i] = Tokens[random];
+            Tokens[random] = temp;
+        }
+>>>>>>> Stashed changes
     }
 
     [TargetRpc]
@@ -93,6 +173,7 @@ public class PlayerScript : NetworkBehaviour
             {
                 if (GUI.Button(new Rect(10, 10, 200, 200), "Koniec tury"))
                 {
+                    RemoveTokensFromList();
                     CmdAlterTurn();
                 }
             }

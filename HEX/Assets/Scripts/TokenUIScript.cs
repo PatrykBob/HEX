@@ -8,7 +8,7 @@ public class TokenUIScript : NetworkBehaviour
 {
     public GameObject inputManager;
 
-    private PlayerScript player;
+    public PlayerScript player;
 
     public string name;
     // Start is called before the first frame update
