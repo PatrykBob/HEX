@@ -63,6 +63,7 @@ public class PlayerScript : NetworkBehaviour
             sztab = "Red_Sztab";
         }
         TokensOnHand.Add(sztab);
+        GetComponent<InputManagerScript>().SetFraction(fraction);
     }
 
     void GetTokenList()

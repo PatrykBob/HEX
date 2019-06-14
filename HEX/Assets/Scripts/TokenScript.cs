@@ -24,14 +24,13 @@ public class TokenScript : NetworkBehaviour
     [SyncVar]
     public int initiation = 0;
     [SyncVar]
-    public bool wasMoved = false;
-    [SyncVar]
     public bool mobility;
     [SyncVar]
     public int rotation = 0;
-
     [SyncVar]
     public bool toDestroy = false;
+
+    public bool canBeMoved = true;
 
     public TokenScriptableObject tokenObject;
 

@@ -14,6 +14,8 @@ public class InputManagerScript : MonoBehaviour
 
     public bool inPlace;
 
+    public FractionEnum.Fraction fraction;
+
     void Update()
     {
         TouchControl();
@@ -186,7 +188,13 @@ public class InputManagerScript : MonoBehaviour
             {
                 if (hit.transform.name == "MovingQuad")
                 {
-                    tokenToSelect = hit.transform.parent.gameObject;
+                    if (hit.transform.parent.GetComponent<TokenScript>().tokenObject.fraction == fraction)
+                    {
+                        if (hit.transform.parent.GetComponent<TokenScript>().canBeMoved)
+                        {
+                            tokenToSelect = hit.transform.parent.gameObject;
+                        }
+                    }
                 }
             }
         }
@@ -223,13 +231,13 @@ public class InputManagerScript : MonoBehaviour
         }
     }
 
+    public void SetFraction(FractionEnum.Fraction fractionToSet)
+    {
+        fraction = fractionToSet;
+    }
+
     private void OnGUI()
     {
-        if(GUI.Button(new Rect(200, 300, 50, 50), "OK"))
-        {
-            CheckBuffs();
-        }
-
         if (selectedToken != null)
         {
             if (inPlace)
@@ -237,6 +245,7 @@ public class InputManagerScript : MonoBehaviour
                 if (GUI.Button(new Rect(100, 300, 50, 50), "OK"))
                 {
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
+                    selectedToken.transform.gameObject.GetComponent<TokenScript>().canBeMoved = false;
                     selectedToken = null;
                     CheckBuffs();
                 }
