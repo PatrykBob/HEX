@@ -63,8 +63,14 @@ public class TokenScript : NetworkBehaviour
                 initiationText2.transform.localScale = new Vector3(1, 1, 1);
             }
         }
-
-        health += tokenObject.baseArmor;
+        if (tokenObject.headquarters)
+        {
+            health = 20;
+        }
+        else
+        {
+            health += tokenObject.baseArmor;
+        }
         initiation = tokenObject.baseInitiation;
         mobility = tokenObject.mobility;
 

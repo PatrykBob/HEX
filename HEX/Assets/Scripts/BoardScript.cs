@@ -225,35 +225,35 @@ public class BoardScript : MonoBehaviour
         }
         if (attack[1] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, true))
+            if (IsThereAToken(i + 1, j - 1, fraction, true))
             {
                 points[i + 1, j - 1].token.GetComponent<TokenScript>().GetAttacked(attack[1] + buff);
             }
         }
         if (attack[2] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, true))
+            if (IsThereAToken(i, j - 1, fraction, true))
             {
                 points[i, j - 1].token.GetComponent<TokenScript>().GetAttacked(attack[2] + buff);
             }
         }
         if (attack[3] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, true))
+            if (IsThereAToken(i - 1, j, fraction, true))
             {
                 points[i - 1, j].token.GetComponent<TokenScript>().GetAttacked(attack[3] + buff);
             }
         }
         if (attack[4] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, true))
+            if (IsThereAToken(i - 1, j + 1, fraction, true))
             {
                 points[i - 1, j + 1].token.GetComponent<TokenScript>().GetAttacked(attack[4] + buff);
             }
         }
         if (attack[5] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, true))
+            if (IsThereAToken(i, j + 1, fraction, true))
             {
                 points[i, j + 1].token.GetComponent<TokenScript>().GetAttacked(attack[5] + buff);
             }
@@ -268,7 +268,7 @@ public class BoardScript : MonoBehaviour
             {
                 if (IsThereAToken(i + r, j, fraction, true))
                 {
-                    if (points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[3])
+                    if (!points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[3])
                     {
                         points[i + r, j].token.GetComponent<TokenScript>().GetAttacked(attack[0] + buff);
                     }
@@ -281,9 +281,9 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i + 1, j - 1, fraction, true))
                 {
-                    if (points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[4])
+                    if (!points[i + 1, j - 1].token.GetComponent<TokenScript>().tokenObject.armor[4])
                     {
                         points[i + 1, j - 1].token.GetComponent<TokenScript>().GetAttacked(attack[1] + buff);
                     }
@@ -295,11 +295,11 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i, j - r, fraction, true))
                 {
-                    if (points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[5])
+                    if (!points[i, j - r].token.GetComponent<TokenScript>().tokenObject.armor[5])
                     {
-                        points[i, j - 1].token.GetComponent<TokenScript>().GetAttacked(attack[2] + buff);
+                        points[i, j - r].token.GetComponent<TokenScript>().GetAttacked(attack[2] + buff);
                     }
                     break;
                 }
@@ -309,11 +309,11 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i - r, j, fraction, true))
                 {
-                    if (points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[0])
+                    if (!points[i - r, j].token.GetComponent<TokenScript>().tokenObject.armor[0])
                     {
-                        points[i - 1, j].token.GetComponent<TokenScript>().GetAttacked(attack[3] + buff);
+                        points[i - r, j].token.GetComponent<TokenScript>().GetAttacked(attack[3] + buff);
                     }
                     break;
                 }
@@ -323,11 +323,11 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i - r, j + r, fraction, true))
                 {
-                    if (points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[1])
+                    if (!points[i - r, j + r].token.GetComponent<TokenScript>().tokenObject.armor[1])
                     {
-                        points[i - 1, j + 1].token.GetComponent<TokenScript>().GetAttacked(attack[4] + buff);
+                        points[i - r, j + r].token.GetComponent<TokenScript>().GetAttacked(attack[4] + buff);
                     }
                     break;
                 }
@@ -337,11 +337,11 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i, j + r, fraction, true))
                 {
-                    if (points[i + r, j].token.GetComponent<TokenScript>().tokenObject.armor[2])
+                    if (!points[i, j + r].token.GetComponent<TokenScript>().tokenObject.armor[2])
                     {
-                        points[i, j + 1].token.GetComponent<TokenScript>().GetAttacked(attack[5] + buff);
+                        points[i, j + r].token.GetComponent<TokenScript>().GetAttacked(attack[5] + buff);
                     }
                     break;
                 }
@@ -366,9 +366,9 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i + r, j - r, fraction, true))
                 {
-                    points[i + 1, j - 1].token.GetComponent<TokenScript>().GetAttacked(attack[1] + buff);
+                    points[i + r, j - r].token.GetComponent<TokenScript>().GetAttacked(attack[1] + buff);
                 }
             }
         }
@@ -376,9 +376,9 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i, j - r, fraction, true))
                 {
-                    points[i, j - 1].token.GetComponent<TokenScript>().GetAttacked(attack[2] + buff);
+                    points[i, j - r].token.GetComponent<TokenScript>().GetAttacked(attack[2] + buff);
                 }
             }
         }
@@ -386,9 +386,9 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i - r, j, fraction, true))
                 {
-                    points[i - 1, j].token.GetComponent<TokenScript>().GetAttacked(attack[3] + buff);
+                    points[i - r, j].token.GetComponent<TokenScript>().GetAttacked(attack[3] + buff);
                 }
             }
         }
@@ -396,9 +396,9 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i - r, j + r, fraction, true))
                 {
-                    points[i - 1, j + 1].token.GetComponent<TokenScript>().GetAttacked(attack[4] + buff);
+                    points[i - r, j + r].token.GetComponent<TokenScript>().GetAttacked(attack[4] + buff);
                 }
             }
         }
@@ -406,9 +406,9 @@ public class BoardScript : MonoBehaviour
         {
             for (int r = 0; r < 6; r++)
             {
-                if (IsThereAToken(i + 1, j, fraction, true))
+                if (IsThereAToken(i, j + r, fraction, true))
                 {
-                    points[i, j + 1].token.GetComponent<TokenScript>().GetAttacked(attack[5] + buff);
+                    points[i, j + r].token.GetComponent<TokenScript>().GetAttacked(attack[5] + buff);
                 }
             }
         }
@@ -425,35 +425,35 @@ public class BoardScript : MonoBehaviour
         }
         if (buff[1] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i + 1, j - 1, fraction, false))
             {
                 points[i + 1, j - 1].token.GetComponent<TokenScript>().meleeBuff += buff[1];
             }
         }
         if (buff[2] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i, j - 1, fraction, false))
             {
                 points[i, j - 1].token.GetComponent<TokenScript>().meleeBuff += buff[2];
             }
         }
         if (buff[3] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i - 1, j, fraction, false))
             {
                 points[i - 1, j].token.GetComponent<TokenScript>().meleeBuff += buff[3];
             }
         }
         if (buff[4] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i - 1, j + 1, fraction, false))
             {
                 points[i - 1, j + 1].token.GetComponent<TokenScript>().meleeBuff += buff[4];
             }
         }
         if (buff[5] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i, j + 1, fraction, false))
             {
                 points[i, j + 1].token.GetComponent<TokenScript>().meleeBuff += buff[5];
             }
@@ -471,35 +471,35 @@ public class BoardScript : MonoBehaviour
         }
         if (buff[1] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i + 1, j - 1, fraction, false))
             {
                 points[i + 1, j - 1].token.GetComponent<TokenScript>().rangeBuff += buff[1];
             }
         }
         if (buff[2] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i, j - 1, fraction, false))
             {
                 points[i, j - 1].token.GetComponent<TokenScript>().rangeBuff += buff[2];
             }
         }
         if (buff[3] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i - 1, j, fraction, false))
             {
                 points[i - 1, j].token.GetComponent<TokenScript>().rangeBuff += buff[3];
             }
         }
         if (buff[4] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i - 1, j + 1, fraction, false))
             {
                 points[i - 1, j + 1].token.GetComponent<TokenScript>().rangeBuff += buff[4];
             }
         }
         if (buff[5] > 0)
         {
-            if (IsThereAToken(i + 1, j, fraction, false))
+            if (IsThereAToken(i, j + 1, fraction, false))
             {
                 points[i, j + 1].token.GetComponent<TokenScript>().rangeBuff += buff[5];
             }
@@ -567,21 +567,25 @@ public class BoardScript : MonoBehaviour
         }
         else
         {
-            if (points[i, j].token)
+            Debug.Log(i + " " + j);
+            if (points[i, j])
             {
-                if (reverse)
+                if (points[i, j].token)
                 {
-                    if (points[i, j].token.GetComponent<TokenScript>().tokenObject.fraction != fraction)
+                    if (reverse)
                     {
-                        return true;
-                    }
+                        if (points[i, j].token.GetComponent<TokenScript>().tokenObject.fraction != fraction)
+                        {
+                            return true;
+                        }
 
-                }
-                else
-                {
-                    if (points[i, j].token.GetComponent<TokenScript>().tokenObject.fraction == fraction)
+                    }
+                    else
                     {
-                        return true;
+                        if (points[i, j].token.GetComponent<TokenScript>().tokenObject.fraction == fraction)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

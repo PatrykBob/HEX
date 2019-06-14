@@ -66,7 +66,7 @@ public class InputManagerScript : MonoBehaviour
     void CheckBuffs()
     {
         Debug.Log("Check Input");
-        GetComponent<PlayerScript>().CheckBuffs();
+        GetComponent<PlayerScript>().CmdCheckBuffs();
     }
 
     void CheckTokenPlace(RaycastHit[] hits)
@@ -225,6 +225,11 @@ public class InputManagerScript : MonoBehaviour
 
     private void OnGUI()
     {
+        if(GUI.Button(new Rect(200, 300, 50, 50), "OK"))
+        {
+            CheckBuffs();
+        }
+
         if (selectedToken != null)
         {
             if (inPlace)

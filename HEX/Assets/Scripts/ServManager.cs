@@ -61,7 +61,7 @@ public class ServManager : NetworkManager
     {
         foreach(var player in players)
         {
-            player.playerControllers[0].gameObject.GetComponent<PlayerScript>().RpcCheckBuffs();
+            player.playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetCheckBuffs(player);
         }
     }
 
@@ -106,7 +106,10 @@ public class ServManager : NetworkManager
 
     public void Battle()
     {
-
+        foreach(var player in players)
+        {
+            player.playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetBattle(player);
+        }
     }
 
     public void AssignFractionsToPlayers()

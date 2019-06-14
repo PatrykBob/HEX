@@ -78,14 +78,15 @@ public class PlayerScript : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void RpcCheckBuffs()
+    [TargetRpc]
+    public void TargetCheckBuffs(NetworkConnection target)
     {
         Debug.Log("Check player rpc");
         board.GetComponent<BoardScript>().CheckBuffs();
     }
 
-    public void CheckBuffs()
+    [Command]
+    public void CmdCheckBuffs()
     {
         Debug.Log("Check player");
         ServManager.Instance.CheckBuffs();
@@ -153,6 +154,13 @@ public class PlayerScript : NetworkBehaviour
     [Command]
     public void CmdBattle()
     {
+        //board.GetComponent<BoardScript>().Battle();
+        ServManager.Instance.Battle();
+    }
+
+    [TargetRpc]
+    public void TargetBattle(NetworkConnection target)
+    {
         board.GetComponent<BoardScript>().Battle();
     }
 
@@ -169,7 +177,6 @@ public class PlayerScript : NetworkBehaviour
     [Command]
     void CmdAlterTurn()
     {
-        RemoveTokensFromList();
         ServManager.Instance.AlterTurns();
     }
 
@@ -208,6 +215,7 @@ public class PlayerScript : NetworkBehaviour
             {
                 if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), "Koniec tury"))
                 {
+                    RemoveTokensFromList();
                     CmdAlterTurn();
                 }
             }
