@@ -247,6 +247,7 @@ public class InputManagerScript : MonoBehaviour
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
                     selectedToken.transform.gameObject.GetComponent<TokenScript>().canBeMoved = false;
                     selectedToken = null;
+                    GetComponent<PlayerScript>().TurnOnHUD();
                     CheckBuffs();
                 }
             }

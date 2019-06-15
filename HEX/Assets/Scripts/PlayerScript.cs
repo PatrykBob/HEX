@@ -14,6 +14,8 @@ public class PlayerScript : NetworkBehaviour
     public bool ready = false;
     [SyncVar]
     public FractionEnum.Fraction fraction;
+    [SyncVar]
+    public bool firstTurn = true;
 
     public List<string> Tokens = new List<string>();
     public List<string> TokensOnHand = new List<string>();
@@ -91,7 +93,6 @@ public class PlayerScript : NetworkBehaviour
     {
         Debug.Log("Check player");
         ServManager.Instance.CheckBuffs();
-        //RpcCheckBuffs();
     }
 
     void FillTokens()
@@ -127,7 +128,10 @@ public class PlayerScript : NetworkBehaviour
     [TargetRpc]
     public void TargetGiveTokens(NetworkConnection target)
     {
-        FillTokens();
+        if (!firstTurn)
+        {
+            FillTokens();
+        }
         RemoveTokens();
         SpawnTokens();
     }
@@ -142,7 +146,7 @@ public class PlayerScript : NetworkBehaviour
 
     void SpawnTokens()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < TokensOnHand.Count; i++)
         {
             GameObject toSpawn = Instantiate(tokenUI);
             toSpawn.transform.SetParent(panel);
@@ -165,6 +169,22 @@ public class PlayerScript : NetworkBehaviour
         board.GetComponent<BoardScript>().Battle();
     }
 
+    [TargetRpc]
+    public void TargetTurnOnHUD(NetworkConnection target)
+    {
+        panel.gameObject.SetActive(true);
+    }
+
+    public void TurnOnHUD()
+    {
+        panel.gameObject.SetActive(true);
+    }
+
+    public void TurnOffHUD()
+    {
+        panel.gameObject.SetActive(false);
+    }
+
     [Command]
     public void CmdSpawnTokenOnServer(string name)
     {
@@ -179,6 +199,10 @@ public class PlayerScript : NetworkBehaviour
     void CmdAlterTurn()
     {
         ServManager.Instance.AlterTurns();
+        if (firstTurn)
+        {
+            firstTurn = false;
+        }
     }
 
     void RemoveTokensFromList()
@@ -212,11 +236,12 @@ public class PlayerScript : NetworkBehaviour
         }
         else
         {
-            if (myTurn)
+            if (myTurn && panel.gameObject.activeSelf)
             {
                 if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), "Koniec tury"))
                 {
                     RemoveTokensFromList();
+                    TurnOffHUD();
                     CmdAlterTurn();
                 }
             }

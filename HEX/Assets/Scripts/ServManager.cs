@@ -76,6 +76,8 @@ public class ServManager : NetworkManager
             player.playerControllers[0].gameObject.GetComponent<PlayerScript>().lobby = false;
         }
         players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
+        players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[0]);
+        players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetTurnOnHUD(players[0]);
         Debug.Log("game started");
     }
 
@@ -90,6 +92,7 @@ public class ServManager : NetworkManager
         activePlayer %= players.Count;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[activePlayer]);
+        players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetTurnOnHUD(players[activePlayer]);
     }
 
     public void RandomizeFractions()

@@ -37,6 +37,7 @@ public class TokenUIScript : NetworkBehaviour
         else
         {
             player.CmdSpawnTokenOnServer(name);
+            player.TurnOffHUD();
         }
             player.RemoveToken(index);
             Destroy(this.gameObject);
