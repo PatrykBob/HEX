@@ -93,12 +93,12 @@ public class NetworkHUDScript : MonoBehaviour
                         for (int i = 0; i < manager.matches.Count; i++)
                         {
                             var match = manager.matches[i];
-                            if (GUI.Button(new Rect(xpos, ypos, 450, 300), "Dołącz do: " + match.name))
+                            if (GUI.Button(new Rect(xpos, ypos, 450, 300), "Dołącz do: " + match.name,customStyle2))
                             {
                                 manager.matchName = match.name;
                                 manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
                             }
-                            ypos += 100;
+                            ypos += 300;
                         }
 
                         if (GUI.Button(new Rect(xpos, ypos, 450, 300), Resources.Load<Texture>("Images/Buttons/Back"),customStyle))
