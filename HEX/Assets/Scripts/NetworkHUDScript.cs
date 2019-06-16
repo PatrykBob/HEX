@@ -65,7 +65,7 @@ public class NetworkHUDScript : MonoBehaviour
                 {
                     if (manager.matches == null)
                     {
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Utwórz mecz"))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/Buttons/CreateMatchButton"), customStyle))
                         {
                             manager.matchMaker.CreateMatch(manager.matchName, manager.matchSize, true, "", "", "", 0, 0, manager.OnMatchCreate);
                         }
@@ -88,7 +88,7 @@ public class NetworkHUDScript : MonoBehaviour
                         for (int i = 0; i < manager.matches.Count; i++)
                         {
                             var match = manager.matches[i];
-                            if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Dołącz do: " + match.name))
+                            if (GUI.Button(new Rect(xpos, ypos, 200, 200), "Dołącz do: " + match.name))
                             {
                                 manager.matchName = match.name;
                                 manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
@@ -96,7 +96,7 @@ public class NetworkHUDScript : MonoBehaviour
                             ypos += spacing;
                         }
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Powrót"))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/BackButton"), customStyle))
                         {
                             manager.matches = null;
                         }
