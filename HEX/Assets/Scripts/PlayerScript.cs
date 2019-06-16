@@ -26,6 +26,7 @@ public class PlayerScript : NetworkBehaviour
     public GameObject tokenUI;
     public Transform panel;
     public GameObject board;
+    public GUIStyle customStyle;
 
     public int buttonSizeW = 200;
     public int buttonSizeH = 200;
@@ -227,9 +228,9 @@ public class PlayerScript : NetworkBehaviour
 
         if (lobby)
         {
-            GUI.Label(new Rect(Screen.width / 2 - buttonSizeW / 2, Screen.height / 2 - buttonSizeH / 2, buttonSizeW, buttonSizeH), ready ? "Gotowy" : "Nie gotowy");
+            GUI.Label(new Rect(Screen.width / 3 - buttonSizeW / 3, Screen.height / 3 - buttonSizeH / 3, buttonSizeW, buttonSizeH), ready ? "Gotowy" : "Nie gotowy");
 
-            if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), "Gotowość"))
+            if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), Resources.Load<Texture>("Images/Buttons/ReadyButton"), customStyle))
             {
                 CmdReady();
             }
@@ -238,7 +239,7 @@ public class PlayerScript : NetworkBehaviour
         {
             if (myTurn && panel.gameObject.activeSelf)
             {
-                if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), "Koniec tury"))
+                if (GUI.Button(new Rect(Screen.width - 200, 0, 200, 200), Resources.Load<Texture>("Images/Buttons/EndRoundButton"), customStyle))
                 {
                     RemoveTokensFromList();
                     TurnOffHUD();

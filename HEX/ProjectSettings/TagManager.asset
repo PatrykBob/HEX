@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PointOnBoard
   - Token
+  - Cam
   layers:
   - Default
   - TransparentFX

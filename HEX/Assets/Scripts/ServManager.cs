@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class ServManager : NetworkManager
 {
     public int maxPlayers = 4;

@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class NetworkHUDScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public NetworkManager manager;
     public bool showGUI = true;
+    public GUIStyle customStyle;
+    
 
     bool m_ShowServer;
 
+    public void Start()
+    {
+        
+    }
 
     private void Awake()
     {
@@ -37,7 +44,7 @@ public class NetworkHUDScript : MonoBehaviour
 
         if (NetworkServer.active || manager.IsClientConnected())
         {
-            if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Wyjdź z gry"))
+            if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/QuitButton"), customStyle))
             {
                 manager.StopHost();
             }
@@ -58,7 +65,7 @@ public class NetworkHUDScript : MonoBehaviour
                 {
                     if (manager.matches == null)
                     {
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Utwórz mecz"))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/Buttons/CreateMatchButton"), customStyle))
                         {
                             manager.matchMaker.CreateMatch(manager.matchName, manager.matchSize, true, "", "", "", 0, 0, manager.OnMatchCreate);
                         }
@@ -70,7 +77,7 @@ public class NetworkHUDScript : MonoBehaviour
 
                         ypos += 10;
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Znajdź mecz"))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/NewGameButton"), customStyle)) 
                         {
                             manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, manager.OnMatchList);
                         }
@@ -81,7 +88,7 @@ public class NetworkHUDScript : MonoBehaviour
                         for (int i = 0; i < manager.matches.Count; i++)
                         {
                             var match = manager.matches[i];
-                            if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Dołącz do: " + match.name))
+                            if (GUI.Button(new Rect(xpos, ypos, 200, 200), "Dołącz do: " + match.name))
                             {
                                 manager.matchName = match.name;
                                 manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
@@ -89,7 +96,7 @@ public class NetworkHUDScript : MonoBehaviour
                             ypos += spacing;
                         }
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Powrót"))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/BackButton"), customStyle))
                         {
                             manager.matches = null;
                         }
