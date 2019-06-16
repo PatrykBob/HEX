@@ -16,7 +16,7 @@ MonoBehaviour:
   fraction: 2
   baseInitiation: 0
   baseArmor: 1
-  headquarters: 1
+  headquarters: 0
   initiation1X: 0
   initiation1Y: 0
   initiation2X: 0

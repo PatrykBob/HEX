@@ -34,8 +34,8 @@ MonoBehaviour:
   doubleAttack: 0
   mobility: 0
   rangeAttackBuff: 
-  meleeAttackBuff: 010000000100000000000000000000000000000001000000
-  initiationBuff: 
+  meleeAttackBuff: 
+  initiationBuff: 010000000100000000000000000000000000000001000000
   doubleAttackBuff: 
   healthBuff: 
   mobilityBuff: 

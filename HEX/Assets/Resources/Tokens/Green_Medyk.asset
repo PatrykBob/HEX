@@ -37,7 +37,7 @@ MonoBehaviour:
   meleeAttackBuff: 
   initiationBuff: 
   doubleAttackBuff: 
-  healthBuff: 
+  healthBuff: 010000000100000000000000000000000000000001000000
   mobilityBuff: 
   globalMobilityBuff: 0
   scooper: 

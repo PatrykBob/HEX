@@ -28,15 +28,15 @@ MonoBehaviour:
   buff: 1
   armor: 000000000000
   attackRange: 
-  attackMelee: 
+  attackMelee: 010000000100000001000000010000000100000001000000
   attackGauss: 
   net: 
   doubleAttack: 0
   mobility: 0
   rangeAttackBuff: 
-  meleeAttackBuff: 010000000100000001000000010000000100000001000000
+  meleeAttackBuff: 
   initiationBuff: 
-  doubleAttackBuff: 
+  doubleAttackBuff: 010101010101
   healthBuff: 
   mobilityBuff: 
   globalMobilityBuff: 0
