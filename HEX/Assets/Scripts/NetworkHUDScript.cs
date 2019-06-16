@@ -16,7 +16,6 @@ public class NetworkHUDScript : MonoBehaviour
 
 
     public bool GuiOnSolo = false;
-    public bool GuiOnMulti = false;
     bool m_ShowServer;
 
     public void Start()
@@ -58,14 +57,14 @@ public class NetworkHUDScript : MonoBehaviour
 
         if (GuiOnSolo)
         {
-            GUI.Box(new Rect(Screen.width / 2 - 500, Screen.height / 2 - 300, 1000, 500), "Czy na pewno chcesz wyjsc?");
-            if (GUI.Button(new Rect(Screen.width / 2 - 450, Screen.height / 2 - 200, 400, 300), "Tak"))
+            GUI.Box(new Rect(Screen.width / 2 - 500, Screen.height / 2 - 600, 1000, 500), Resources.Load<Texture>("Images/Buttons/DoYouWantToLeave"), customStyle);
+            if (GUI.Button(new Rect(Screen.width / 2 - 450, Screen.height / 2, 400, 300), Resources.Load<Texture>("Images/Buttons/Yes"), customStyle))
             {
                 manager.StopHost();
                 GuiOnSolo = false;
                 //Application.Quit();
             }
-            if (GUI.Button(new Rect(Screen.width / 2 + 50, Screen.height / 2 - 200, 400, 300), "Nie"))
+            if (GUI.Button(new Rect(Screen.width / 2 + 50, Screen.height / 2, 400, 300), Resources.Load<Texture>("Images/Buttons/No"), customStyle))
             {
                 GuiOnSolo = false;
             }
@@ -120,24 +119,9 @@ public class NetworkHUDScript : MonoBehaviour
 
                         if (GUI.Button(new Rect(xpos, ypos, 450, 300), Resources.Load<Texture>("Images/Buttons/Back"), customStyle))
                         {
-                            GuiOnMulti = true;
+                            manager.matches = null;
                         }
                         ypos += 100;
-
-                        if (GuiOnMulti)
-                        {
-                            GUI.Box(new Rect(Screen.width / 2 - 500, Screen.height / 2 - 300, 1000, 500), "Czy na pewno chcesz wyjsc?");
-                            if (GUI.Button(new Rect(Screen.width / 2 - 450, Screen.height / 2 - 200, 400, 300), "Tak"))
-                            {
-                                manager.matches = null;
-                                GuiOnMulti = false;
-                                //Application.Quit();
-                            }
-                            if (GUI.Button(new Rect(Screen.width / 2 + 50, Screen.height / 2 - 200, 400, 300), "Nie"))
-                            {
-                                GuiOnMulti = false;
-                            }
-                        }
                     }
                 }
             }
