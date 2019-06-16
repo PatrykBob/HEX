@@ -353,6 +353,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  GuiOnSolo: 0
 --- !u!4 &28981168
 Transform:
   m_ObjectHideFlags: 0
@@ -1019,7 +1020,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 290211e795fb3df44977c7dc7bb52a2d, type: 2}
+  - {fileID: 2100000, guid: 3a2b2d978e4537d4484cc175be7686f3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
