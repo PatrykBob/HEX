@@ -10,7 +10,11 @@ public class NetworkHUDScript : MonoBehaviour
     public NetworkManager manager;
     public bool showGUI = true;
     public GUIStyle customStyle;
-    
+    public GUIStyle customStyle2;
+    public GUIStyle customStyle3;
+
+
+
 
     bool m_ShowServer;
 
@@ -38,22 +42,22 @@ public class NetworkHUDScript : MonoBehaviour
 
         int xpos = 10;
         int ypos = 40;
-        const int spacing = 24;
+        const int spacing = 30;
 
         bool noConnection = (manager.client == null || manager.client.connection == null || manager.client.connection.connectionId == -1);
 
         if (NetworkServer.active || manager.IsClientConnected())
         {
-            if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/QuitButton"), customStyle))
+            if (GUI.Button(new Rect(10, 100, 200, 200), Resources.Load<Texture>("Images/Buttons/Back"), customStyle))
             {
                 manager.StopHost();
             }
-            ypos += spacing;
+            ypos += 30;
         }
 
         if (!NetworkServer.active && !manager.IsClientConnected() && noConnection)
         {
-            ypos += 10;
+            ypos += 80;
 
             if (manager.matchMaker == null)
             {
@@ -65,23 +69,24 @@ public class NetworkHUDScript : MonoBehaviour
                 {
                     if (manager.matches == null)
                     {
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/Buttons/CreateMatchButton"), customStyle))
+                        if (GUI.Button(new Rect(xpos, ypos, 140, 70), Resources.Load<Texture>("Images/Buttons/CreateMatchButton"),customStyle))
                         {
                             manager.matchMaker.CreateMatch(manager.matchName, manager.matchSize, true, "", "", "", 0, 0, manager.OnMatchCreate);
                         }
-                        ypos += spacing;
+                        ypos += 80;
 
-                        GUI.Label(new Rect(xpos, ypos, 100, 20), "Nazwa pokoju: ");
-                        manager.matchName = GUI.TextField(new Rect(xpos + 100, ypos, 100, 20), manager.matchName);
-                        ypos += spacing;
+                        GUI.Label(new Rect(xpos, ypos, 100, 20), "Nazwa pokoju: ", customStyle2);
+                        ypos += 30;
+                        manager.matchName = GUI.TextField(new Rect(xpos , ypos, 140,40 ), manager.matchName, customStyle3);
+                        ypos += 50;
 
-                        ypos += 10;
+                        
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/NewGameButton"), customStyle)) 
+                        if (GUI.Button(new Rect(xpos, ypos, 140, 70), Resources.Load<Texture>("Images/Buttons/JoinGame"),customStyle)) 
                         {
                             manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, manager.OnMatchList);
                         }
-                        ypos += spacing;
+                        ypos += 100;
                     }
                     else
                     {
@@ -93,14 +98,14 @@ public class NetworkHUDScript : MonoBehaviour
                                 manager.matchName = match.name;
                                 manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
                             }
-                            ypos += spacing;
+                            ypos += 100;
                         }
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/BackButton"), customStyle))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/BackButton"),customStyle))
                         {
                             manager.matches = null;
                         }
-                        ypos += spacing;
+                        ypos += 100;
                     }
                 }
             }
