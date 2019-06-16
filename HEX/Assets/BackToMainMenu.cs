@@ -8,7 +8,7 @@ public class BackToMainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject g = Camera.main.gameObject;
+        GameObject g = GameObject.FindGameObjectWithTag("Cam");
         Booly = g.GetComponent<SlidingCamer>();
 
     }

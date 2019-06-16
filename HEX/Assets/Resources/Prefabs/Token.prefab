@@ -120,19 +120,6 @@ MonoBehaviour:
   i: 0
   j: 0
   name: 
-<<<<<<< Updated upstream
-=======
-  health: 1
-  netted: 0
-  doubleAttack: 0
-  rangeBuff: 0
-  meleeBuff: 0
-  initiation: 0
-  wasMoved: 0
-  mobility: 0
-  rotation: 0
-  toDestroy: 0
->>>>>>> Stashed changes
   tokenObject: {fileID: 0}
 --- !u!64 &7493627078566286849
 MeshCollider:

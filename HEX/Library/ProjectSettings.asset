@@ -726,10 +726,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 7b43c89a-06d5-424c-ba30-470b571d4c42
+  cloudProjectId: bd1dea48-03f9-49d3-b603-7b807a93dfe6
   framebufferDepthMemorylessMode: 0
-  projectName: HEX
-  organizationId: rafatuj
+  projectName: HEX (2)
+  organizationId: buddabob
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

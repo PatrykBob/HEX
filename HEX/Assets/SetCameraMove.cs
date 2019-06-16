@@ -10,7 +10,7 @@ public class SetCameraMove : MonoBehaviour
    
     void Start()
     {
-        GameObject g = Camera.main.gameObject;
+        GameObject g = GameObject.FindGameObjectWithTag("Cam");
         Booly = g.GetComponent<SlidingCamer>();
         
     }

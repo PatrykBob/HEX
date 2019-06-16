@@ -11,10 +11,6 @@ GameObject:
   - component: {fileID: 1005722449512728708}
   - component: {fileID: 1005722449512728757}
   - component: {fileID: 1005722449512728755}
-<<<<<<< Updated upstream
-=======
-  - component: {fileID: -8725111399975690286}
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -85,39 +81,11 @@ MonoBehaviour:
   myTurn: 0
   lobby: 1
   ready: 0
-<<<<<<< Updated upstream
-=======
-  fraction: 0
-  Tokens: []
-  TokensOnHand: []
-  ToRemove: 
->>>>>>> Stashed changes
   token: {fileID: 2102432656897600390, guid: d173e744e0964904db14028d20a3aeec, type: 3}
   tokenUI: {fileID: 8397852584628692306, guid: d4d73e550ca2e2c41992a3c74d366d00, type: 3}
   panel: {fileID: 0}
   buttonSizeW: 200
   buttonSizeH: 200
-<<<<<<< Updated upstream
-=======
---- !u!114 &-8725111399975690286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005722449512728713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aef85c04e8d7524c8462408bc548f3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedToken: {fileID: 0}
-  tokenToSelect: {fileID: 0}
-  board: {fileID: 0}
-  moving: 0
-  rotating: 0
-  inPlace: 0
->>>>>>> Stashed changes
 --- !u!1 &1285193441574696941
 GameObject:
   m_ObjectHideFlags: 0
