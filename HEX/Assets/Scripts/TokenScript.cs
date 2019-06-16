@@ -24,11 +24,13 @@ public class TokenScript : NetworkBehaviour
     [SyncVar]
     public int initiation = 0;
     [SyncVar]
-    public bool wasMoved = false;
-    [SyncVar]
     public bool mobility;
     [SyncVar]
     public int rotation = 0;
+    [SyncVar]
+    public bool toDestroy = false;
+
+    public bool canBeMoved = true;
 
     public TokenScriptableObject tokenObject;
 
@@ -60,8 +62,14 @@ public class TokenScript : NetworkBehaviour
                 initiationText2.transform.localScale = new Vector3(1, 1, 1);
             }
         }
-
-        health += tokenObject.baseArmor;
+        if (tokenObject.headquarters)
+        {
+            health = 20;
+        }
+        else
+        {
+            health += tokenObject.baseArmor;
+        }
         initiation = tokenObject.baseInitiation;
         mobility = tokenObject.mobility;
 
@@ -97,6 +105,10 @@ public class TokenScript : NetworkBehaviour
             }
             transform.Find("Canvas").transform.Find("InitiationText").GetComponent<Text>().color = color;
         }
+        else
+        {
+            Debug.Log("Nie znaleziono");
+        }
     }
 
     void ResetPointOnBoardToken()
@@ -114,6 +126,15 @@ public class TokenScript : NetworkBehaviour
                     script.ResetToken();
                 }
             }
+        }
+    }
+
+    public void GetAttacked(int attack)
+    {
+        health -= attack;
+        if(health < 1)
+        {
+            toDestroy = true;
         }
     }
 

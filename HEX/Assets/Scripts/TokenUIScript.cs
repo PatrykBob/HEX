@@ -10,12 +10,12 @@ public class TokenUIScript : NetworkBehaviour
 
     private PlayerScript player;
 
+    public int index;
+
     public string name;
     // Start is called before the first frame update
     void Start()
-    {
-        GetComponent<RawImage>().texture = Resources.Load<Texture>("Images/Tokens/" + name);
-        inputManager = GameObject.Find("InputManager");
+    {        
         player = transform.parent.parent.parent.GetComponent<PlayerScript>();
     }
 
@@ -23,8 +23,23 @@ public class TokenUIScript : NetworkBehaviour
     void Update()
     {
     }
+
+    public void LoadTexture()
+    {
+        GetComponent<RawImage>().texture = Resources.Load<Texture>("Images/Tokens/" + name);
+    }
     public void Clicked()
     {
-        player.CmdSpawnTokenOnServer(name);
+        if (name == "Red_Bitwa" || name == "Yellow_Bitwa" || name == "Blue_Bitwa" || name == "Green_Bitwa")
+        {
+            player.CmdBattle();
+        }
+        else
+        {
+            player.CmdSpawnTokenOnServer(name);
+            player.TurnOffHUD();
+        }
+            player.RemoveToken(index);
+            Destroy(this.gameObject);
     }
 }

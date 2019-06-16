@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -7583185286106622228}
   m_Layer: 0
   m_Name: Token
-  m_TagString: Untagged
+  m_TagString: Token
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,6 +120,15 @@ MonoBehaviour:
   i: 0
   j: 0
   name: 
+  health: 1
+  netted: 0
+  doubleAttack: 0
+  rangeBuff: 0
+  meleeBuff: 0
+  initiation: 0
+  wasMoved: 0
+  mobility: 0
+  rotation: 0
   tokenObject: {fileID: 0}
 --- !u!64 &7493627078566286849
 MeshCollider:
@@ -129,10 +138,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102432656897600390}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 2534964839176971238, guid: c1f54bcaff82ec04ea625d51fa39148b, type: 3}
 --- !u!114 &3489941129053963820

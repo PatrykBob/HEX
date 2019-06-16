@@ -14,6 +14,8 @@ public class InputManagerScript : MonoBehaviour
 
     public bool inPlace;
 
+    public FractionEnum.Fraction fraction;
+
     void Update()
     {
         TouchControl();
@@ -42,11 +44,11 @@ public class InputManagerScript : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            if (hit.transform.gameObject.name == "RotationQuad")
+            if (hit.transform.gameObject.name == "RotationQuad" && hit.transform.parent.gameObject == selectedToken)
             {
                 rotatingHit = true;
             }
-            if (hit.transform.gameObject.name == "MovingQuad")
+            if (hit.transform.gameObject.name == "MovingQuad" && hit.transform.parent.gameObject == selectedToken)
             {
                 movingHit = true;
                 inPlace = false;
@@ -55,12 +57,18 @@ public class InputManagerScript : MonoBehaviour
         if (movingHit)
         {
             moving = true;
-            selectedToken.GetComponent<TokenScript>().ResetPosition();
+            //selectedToken.GetComponent<TokenScript>().ResetPosition();
         }
         else if (rotatingHit && !movingHit)
         {
             rotating = true;
         }
+    }
+
+    void CheckBuffs()
+    {
+        Debug.Log("Check Input");
+        GetComponent<PlayerScript>().CmdCheckBuffs();
     }
 
     void CheckTokenPlace(RaycastHit[] hits)
@@ -72,13 +80,13 @@ public class InputManagerScript : MonoBehaviour
                 if (hit.transform.GetComponent<PointOnBoardScript>().token == null)
                 {
                     selectedToken.transform.position = hit.transform.position;
-                    hit.transform.GetComponent<PointOnBoardScript>().ChangeToken(selectedToken);
+                    //hit.transform.GetComponent<PointOnBoardScript>().ChangeToken(selectedToken);
                     inPlace = true;
                 }
             }
         }
         moving = false;
-        board.GetComponent<BoardScript>().CheckBuffs();
+        CheckBuffs();
     }
 
     void SnapTokenRotation()
@@ -122,7 +130,7 @@ public class InputManagerScript : MonoBehaviour
             selectedToken.GetComponent<TokenScript>().rotation = 4;
         }
         rotating = false;
-        board.GetComponent<BoardScript>().CheckBuffs();
+        CheckBuffs();
     }
 
     void TokenMoveRotate()
@@ -180,7 +188,13 @@ public class InputManagerScript : MonoBehaviour
             {
                 if (hit.transform.name == "MovingQuad")
                 {
-                    tokenToSelect = hit.transform.parent.gameObject;
+                    if (hit.transform.parent.GetComponent<TokenScript>().tokenObject.fraction == fraction)
+                    {
+                        if (hit.transform.parent.GetComponent<TokenScript>().canBeMoved)
+                        {
+                            tokenToSelect = hit.transform.parent.gameObject;
+                        }
+                    }
                 }
             }
         }
@@ -217,24 +231,25 @@ public class InputManagerScript : MonoBehaviour
         }
     }
 
+    public void SetFraction(FractionEnum.Fraction fractionToSet)
+    {
+        fraction = fractionToSet;
+    }
+
     private void OnGUI()
     {
         if (selectedToken != null)
         {
             if (inPlace)
             {
-                if (GUI.Button(new Rect(200, 200, 50, 50), "OK"))
+                if (GUI.Button(new Rect(100, 300, 50, 50), "OK"))
                 {
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
+                    selectedToken.transform.gameObject.GetComponent<TokenScript>().canBeMoved = false;
                     selectedToken = null;
-                    board.GetComponent<BoardScript>().CheckBuffs();
+                    GetComponent<PlayerScript>().TurnOnHUD();
+                    CheckBuffs();
                 }
-            }
-
-            if(GUI.Button(new Rect(300,300,50,50), "Odrzuć"))
-            {
-                Destroy(selectedToken);
-                selectedToken = null;
             }
         }
     }

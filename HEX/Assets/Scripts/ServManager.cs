@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class ServManager : NetworkManager
 {
     public int maxPlayers = 4;
@@ -38,7 +39,7 @@ public class ServManager : NetworkManager
     {
         if (lobby)
         {
-            if (players.Count > 0)
+            if (players.Count > 1)
             {
                 bool ready = true;
                 foreach (var player in players)
@@ -49,11 +50,19 @@ public class ServManager : NetworkManager
                         break;
                     }
                 }
-                if (ready && players.Count > 0)
+                if (ready && players.Count > 1)
                 {
                     StartGame();
                 }
             }
+        }
+    }
+
+    public void CheckBuffs()
+    {
+        foreach(var player in players)
+        {
+            player.playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetCheckBuffs(player);
         }
     }
 
@@ -68,6 +77,8 @@ public class ServManager : NetworkManager
             player.playerControllers[0].gameObject.GetComponent<PlayerScript>().lobby = false;
         }
         players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
+        players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[0]);
+        players[0].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetTurnOnHUD(players[0]);
         Debug.Log("game started");
     }
 
@@ -82,6 +93,7 @@ public class ServManager : NetworkManager
         activePlayer %= players.Count;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().myTurn = true;
         players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetGiveTokens(players[activePlayer]);
+        players[activePlayer].playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetTurnOnHUD(players[activePlayer]);
     }
 
     public void RandomizeFractions()
@@ -98,7 +110,10 @@ public class ServManager : NetworkManager
 
     public void Battle()
     {
-
+        foreach(var player in players)
+        {
+            player.playerControllers[0].gameObject.GetComponent<PlayerScript>().TargetBattle(player);
+        }
     }
 
     public void AssignFractionsToPlayers()
