@@ -241,7 +241,7 @@ public class PlayerScript : NetworkBehaviour
         {
             if (myTurn && panel.gameObject.activeSelf)
             {
-                if (GUI.Button(new Rect(1, 0, 450, 300), Resources.Load<Texture>("Images/Buttons/EndRoundButton"), customStyle))
+                if (GUI.Button(new Rect(500, 100, 450, 300), Resources.Load<Texture>("Images/Buttons/EndRoundButton"), customStyle))
                 {
                     RemoveTokensFromList();
                     TurnOffHUD();
