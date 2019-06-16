@@ -16,6 +16,8 @@ public class InputManagerScript : MonoBehaviour
 
     public FractionEnum.Fraction fraction;
 
+    public GUIStyle customStyle;
+
     void Update()
     {
         TouchControl();
@@ -242,7 +244,7 @@ public class InputManagerScript : MonoBehaviour
         {
             if (inPlace)
             {
-                if (GUI.Button(new Rect(100, 300, 50, 50), "OK"))
+                if (GUI.Button(new Rect(50, 500, 450, 300), Resources.Load<Texture>("Images/Buttons/AcceptButton"), customStyle))
                 {
                     selectedToken.transform.Find("RotationQuad").gameObject.SetActive(false);
                     selectedToken.transform.gameObject.GetComponent<TokenScript>().canBeMoved = false;
