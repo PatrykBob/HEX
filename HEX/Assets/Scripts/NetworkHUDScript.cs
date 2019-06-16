@@ -48,7 +48,7 @@ public class NetworkHUDScript : MonoBehaviour
 
         if (NetworkServer.active || manager.IsClientConnected())
         {
-            if (GUI.Button(new Rect(10, 100, 200, 200), Resources.Load<Texture>("Images/Buttons/Back"), customStyle))
+            if (GUI.Button(new Rect(10, 100, 450, 300), Resources.Load<Texture>("Images/Buttons/Back"), customStyle))
             {
                 manager.StopHost();
             }
@@ -57,7 +57,7 @@ public class NetworkHUDScript : MonoBehaviour
 
         if (!NetworkServer.active && !manager.IsClientConnected() && noConnection)
         {
-            ypos += 80;
+            ypos += 32;
 
             if (manager.matchMaker == null)
             {
@@ -69,20 +69,20 @@ public class NetworkHUDScript : MonoBehaviour
                 {
                     if (manager.matches == null)
                     {
-                        if (GUI.Button(new Rect(xpos, ypos, 140, 70), Resources.Load<Texture>("Images/Buttons/CreateMatchButton"),customStyle))
+                        if (GUI.Button(new Rect(xpos, ypos, 450, 300), Resources.Load<Texture>("Images/Buttons/CreateMatchButton"), customStyle))
                         {
                             manager.matchMaker.CreateMatch(manager.matchName, manager.matchSize, true, "", "", "", 0, 0, manager.OnMatchCreate);
                         }
-                        ypos += 80;
+                        ypos += 300;
 
-                        GUI.Label(new Rect(xpos, ypos, 100, 20), "Nazwa pokoju: ", customStyle2);
-                        ypos += 30;
-                        manager.matchName = GUI.TextField(new Rect(xpos , ypos, 140,40 ), manager.matchName, customStyle3);
-                        ypos += 50;
+                        GUI.Label(new Rect(xpos, ypos, 100, 20), "Nazwa pokoju: ",customStyle2);
+                        ypos += 80;
+                        manager.matchName = GUI.TextField(new Rect(xpos , ypos, 450,150 ), manager.matchName,customStyle2);
+                        ypos += 150;
 
                         
 
-                        if (GUI.Button(new Rect(xpos, ypos, 140, 70), Resources.Load<Texture>("Images/Buttons/JoinGame"),customStyle)) 
+                        if (GUI.Button(new Rect(xpos, ypos, 450, 300), Resources.Load<Texture>("Images/Buttons/JoinGame"),customStyle)) 
                         {
                             manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, manager.OnMatchList);
                         }
@@ -93,7 +93,7 @@ public class NetworkHUDScript : MonoBehaviour
                         for (int i = 0; i < manager.matches.Count; i++)
                         {
                             var match = manager.matches[i];
-                            if (GUI.Button(new Rect(xpos, ypos, 200, 200), "Dołącz do: " + match.name))
+                            if (GUI.Button(new Rect(xpos, ypos, 450, 300), "Dołącz do: " + match.name))
                             {
                                 manager.matchName = match.name;
                                 manager.matchMaker.JoinMatch(match.networkId, "", "", "", 0, 0, manager.OnMatchJoined);
@@ -101,7 +101,7 @@ public class NetworkHUDScript : MonoBehaviour
                             ypos += 100;
                         }
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 200), Resources.Load<Texture>("Images/MenuButtons/BackButton"),customStyle))
+                        if (GUI.Button(new Rect(xpos, ypos, 450, 300), Resources.Load<Texture>("Images/Buttons/Back"),customStyle))
                         {
                             manager.matches = null;
                         }
