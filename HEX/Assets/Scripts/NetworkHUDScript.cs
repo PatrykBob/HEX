@@ -70,7 +70,7 @@ public class NetworkHUDScript : MonoBehaviour
 
                         ypos += 10;
 
-                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Znajdź mecz"))
+                        if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Znajdź mecz")) 
                         {
                             manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, manager.OnMatchList);
                         }
